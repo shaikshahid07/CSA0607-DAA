@@ -1,0 +1,4 @@
+blocklist_size,queries,sequential_comparisons,hash_lookups,sequential_seconds,hash_seconds
+1000,1000,748022,1000,0.0175,7.3e-05
+10000,1000,7544311,1000,0.1951,0.000104
+100000,1000,75396223,1000,2.7973,0.000139

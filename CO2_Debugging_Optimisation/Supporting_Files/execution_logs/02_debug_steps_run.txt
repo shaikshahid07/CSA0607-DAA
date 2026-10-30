@@ -1,0 +1,55 @@
+==============================================================================
+1. INSERTION TRACE  -  ORIGINAL (buggy)
+  start      : ['A1:3', 'A2:9', 'A3:5', 'A4:9', 'A5:1']
+  pass i=1 key=A2:9 placed at index 0: ['A2:9', 'A2:9', 'A3:5', 'A4:9', 'A5:1']
+  pass i=2 key=A3:5 placed at index 1: ['A2:9', 'A3:5', 'A3:5', 'A4:9', 'A5:1']
+  pass i=3 key=A4:9 placed at index 0: ['A4:9', 'A3:5', 'A3:5', 'A3:5', 'A5:1']
+  pass i=4 key=A5:1 placed at index 3: ['A4:9', 'A3:5', 'A3:5', 'A5:1', 'A5:1']
+
+   INSERTION TRACE  -  CORRECTED
+  start      : ['A1:3', 'A2:9', 'A3:5', 'A4:9', 'A5:1']
+  pass i=1 key=A2:9 placed at index 0: ['A2:9', 'A1:3', 'A3:5', 'A4:9', 'A5:1']
+  pass i=2 key=A3:5 placed at index 1: ['A2:9', 'A3:5', 'A1:3', 'A4:9', 'A5:1']
+  pass i=3 key=A4:9 placed at index 1: ['A2:9', 'A4:9', 'A3:5', 'A1:3', 'A5:1']
+  pass i=4 key=A5:1 placed at index 4: ['A2:9', 'A4:9', 'A3:5', 'A1:3', 'A5:1']
+
+==============================================================================
+2. ALIGNMENT TABLE  -  log='FAILFAIXFAIL' (n=12), pattern='FAIL' (m=4)
+ i window   first mismatch j  orig j after loop  scanned by orig?  orig reports  correct
+ 0 FAIL     none              3                  yes               HIT           HIT
+ 1 AILF     0                 0                  yes               -             -
+ 2 ILFA     0                 0                  yes               -             -
+ 3 LFAI     0                 0                  yes               -             -
+ 4 FAIX     3                 3                  yes               HIT           -
+ 5 AIXF     0                 0                  yes               -             -
+ 6 IXFA     0                 0                  yes               -             -
+ 7 XFAI     0                 0                  yes               -             -
+ 8 FAIL     none              3                  NO (skipped)      -             HIT
+   -> i=4 'FAIX' is a FALSE hit (mismatch at the last char leaves j == m-1);
+   -> i=8 'FAIL' is a MISSED hit (alignment never tried).
+
+==============================================================================
+3. STAGED RE-TESTING (each row = original code + the listed fixes only)
+
+--- sort_alerts   expected: [('A2', 9), ('A4', 9), ('A3', 5), ('A1', 3), ('A5', 1)]
+  original  : [('A4', 9), ('A3', 5), ('A3', 5), ('A5', 1), ('A5', 1)]
+  + D1      : [('A1', 3), ('A1', 3), ('A1', 3), ('A1', 3), ('A4', 9)]
+  + D1 + D2 : [('A2', 9), ('A4', 9), ('A3', 5), ('A1', 3), ('A5', 1)]
+
+--- is_blocked    expected: True, True, False   (queries 10.0.0.9, 10.0.0.5, 8.8.8.8)
+  original  : [False, False, False]   empty blocklist -> None
+  + D3      : [False, True, False]   empty blocklist -> None
+  + D3 + D4 : [True, True, False]   empty blocklist -> False
+
+--- find_signature   expected: [0, 8]
+  original  : [0, 4]
+  + D5      : [0, 4, 8]
+  + D5 + D6 : [0, 8]
+
+--- closest_logins   expected: ((0, 5), 1.4142135623730951)
+  original       : ((0, 2), 60.440052945046304)
+  + D8           : (None, 0)
+  + D8 + D7      : ((0, 0), 0.0)
+  + D8 + D7 + D9 : ((0, 5), 1.4142135623730951)
+  (the three closest_logins fixes depend on each other: D8 alone finds nothing,
+   D8 + D7 reports the point paired with itself at distance 0, and D9 removes that.)

@@ -1,0 +1,160 @@
+
+--- sort_alerts [corrected] ---
+[PASS] question data -> highest first, A2 before A4
+[PASS] no alert lost or duplicated
+[PASS] empty list
+[PASS] single alert
+[PASS] equal severities keep arrival order
+[PASS] already sorted (best case)
+[PASS] reverse sorted (worst case)
+[PASS] largest severity sits at index 0 (D1 boundary)
+
+--- sort_alerts [optimised sorted()] ---
+[PASS] question data -> highest first, A2 before A4
+[PASS] no alert lost or duplicated
+[PASS] empty list
+[PASS] single alert
+[PASS] equal severities keep arrival order
+[PASS] already sorted (best case)
+[PASS] reverse sorted (worst case)
+[PASS] largest severity sits at index 0 (D1 boundary)
+
+--- sort_alerts [optimised insertion_sort_alerts] ---
+[PASS] question data -> highest first, A2 before A4
+[PASS] no alert lost or duplicated
+[PASS] empty list
+[PASS] single alert
+[PASS] equal severities keep arrival order
+[PASS] already sorted (best case)
+[PASS] reverse sorted (worst case)
+[PASS] largest severity sits at index 0 (D1 boundary)
+
+--- is_blocked [corrected] ---
+[PASS] 10.0.0.9 (2nd entry) is blocked
+[PASS] 10.0.0.5 (1st entry) is blocked
+[PASS] 172.16.4.2 (last entry) is blocked
+[PASS] 8.8.8.8 is not blocked
+[PASS] empty blocklist returns False (not None)
+[PASS] empty ip string not blocked
+[PASS] one-entry blocklist, match
+[PASS] one-entry blocklist, no match
+[PASS] duplicate entries in blocklist
+
+--- is_blocked [optimised hash set] ---
+[PASS] 10.0.0.9 (2nd entry) is blocked
+[PASS] 10.0.0.5 (1st entry) is blocked
+[PASS] 172.16.4.2 (last entry) is blocked
+[PASS] 8.8.8.8 is not blocked
+[PASS] empty blocklist returns False (not None)
+[PASS] empty ip string not blocked
+[PASS] one-entry blocklist, match
+[PASS] one-entry blocklist, no match
+[PASS] duplicate entries in blocklist
+
+--- is_blocked [optimised sequential] ---
+[PASS] 10.0.0.9 (2nd entry) is blocked
+[PASS] 10.0.0.5 (1st entry) is blocked
+[PASS] 172.16.4.2 (last entry) is blocked
+[PASS] 8.8.8.8 is not blocked
+[PASS] empty blocklist returns False (not None)
+[PASS] empty ip string not blocked
+[PASS] one-entry blocklist, match
+[PASS] one-entry blocklist, no match
+[PASS] duplicate entries in blocklist
+
+--- find_signature [corrected] ---
+[PASS] question data -> [0, 8]
+[PASS] pattern at the very end of the log
+[PASS] pattern at the very start of the log
+[PASS] pattern equals the whole log
+[PASS] pattern longer than the log
+[PASS] no occurrence
+[PASS] near miss 'FAIX' is not reported
+[PASS] overlapping occurrences
+[PASS] empty log
+[PASS] empty pattern -> no hits
+[PASS] single-character pattern
+[PASS] repeated prefix pattern
+
+--- find_signature [optimised brute force] ---
+[PASS] question data -> [0, 8]
+[PASS] pattern at the very end of the log
+[PASS] pattern at the very start of the log
+[PASS] pattern equals the whole log
+[PASS] pattern longer than the log
+[PASS] no occurrence
+[PASS] near miss 'FAIX' is not reported
+[PASS] overlapping occurrences
+[PASS] empty log
+[PASS] empty pattern -> no hits
+[PASS] single-character pattern
+[PASS] repeated prefix pattern
+
+--- find_signature [optimised Horspool] ---
+[PASS] question data -> [0, 8]
+[PASS] pattern at the very end of the log
+[PASS] pattern at the very start of the log
+[PASS] pattern equals the whole log
+[PASS] pattern longer than the log
+[PASS] no occurrence
+[PASS] near miss 'FAIX' is not reported
+[PASS] overlapping occurrences
+[PASS] empty log
+[PASS] empty pattern -> no hits
+[PASS] single-character pattern
+[PASS] repeated prefix pattern
+
+--- find_signature [optimised str.find] ---
+[PASS] question data -> [0, 8]
+[PASS] pattern at the very end of the log
+[PASS] pattern at the very start of the log
+[PASS] pattern equals the whole log
+[PASS] pattern longer than the log
+[PASS] no occurrence
+[PASS] near miss 'FAIX' is not reported
+[PASS] overlapping occurrences
+[PASS] empty log
+[PASS] empty pattern -> no hits
+[PASS] single-character pattern
+[PASS] repeated prefix pattern
+
+--- closest_logins [corrected] ---
+[PASS] question data -> pair (0, 5)
+[PASS] question data -> distance sqrt(2)
+[PASS] empty events
+[PASS] one event
+[PASS] exactly two events -> (0, 1) and 5.0
+[PASS] duplicate location -> distance 0, pair (0, 2)
+[PASS] all on one vertical line
+[PASS] tie (two pairs at distance 1) -> first pair (0, 1)
+[PASS] all identical points
+
+--- closest_logins [optimised pruned] ---
+[PASS] question data -> pair (0, 5)
+[PASS] question data -> distance sqrt(2)
+[PASS] empty events
+[PASS] one event
+[PASS] exactly two events -> (0, 1) and 5.0
+[PASS] duplicate location -> distance 0, pair (0, 2)
+[PASS] all on one vertical line
+[PASS] tie (two pairs at distance 1) -> first pair (0, 1)
+[PASS] all identical points
+
+--- closest_logins [optimised divide-and-conquer] ---
+[PASS] question data -> pair (0, 5)
+[PASS] question data -> distance sqrt(2)
+[PASS] empty events
+[PASS] one event
+[PASS] exactly two events -> (0, 1) and 5.0
+[PASS] duplicate location -> distance 0, pair (0, 2)
+[PASS] all on one vertical line
+[PASS] tie (two pairs at distance 1) -> first pair (0, 1)
+[PASS] all identical points
+
+--- random equivalence tests (optimised output must equal corrected output) ---
+[PASS] sort: 300 random lists (many equal severities)
+[PASS] signature: 300 random logs/patterns (3 algorithms agree)
+[PASS] closest pair: 300 random tie-heavy batches (3 algorithms agree)
+[PASS] closest pair: 20 random float batches of 500 events
+
+RESULT: 130 passed, 0 failed

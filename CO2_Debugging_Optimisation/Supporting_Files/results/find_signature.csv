@@ -1,0 +1,5 @@
+log_type,log_length,pattern_length,occurrences,brute_comparisons,horspool_comparisons,brute_seconds,horspool_seconds,builtin_seconds
+random log,200000,4,40,207835,55287,0.0267,0.0092,0.000144
+random log,200000,8,40,208130,30129,0.0274,0.0056,0.000148
+random log,200000,16,40,208195,17130,0.029,0.0045,9.9e-05
+worst case for brute force,10000,8,0,79944,9993,0.007,0.0019,1.7e-05

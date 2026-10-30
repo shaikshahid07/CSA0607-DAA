@@ -1,0 +1,48 @@
+SentinelOps experiments, seed 2026
+
+E1  sort_alerts  (severity 1-10)
+         data      n           insertion_comparisons      insertion_shifts  insertion_seconds  sorted_comparisons  sorted_seconds
+       random   1000                          217547                216551             0.0268                6756         0.00013
+       random   2000                          902630                900632             0.1118               13815         0.00024
+       random   5000                         5638478               5633481             0.5689               35391         0.00056
+       random  10000                        22297542              22287543             2.2848               70911         0.00125
+nearly sorted   1000                            1060                    61             0.0001                1989           5e-05
+nearly sorted   5000                            5227                   228             0.0005                6279         0.00018
+nearly sorted  10000                           10408                   409             0.0009               11446         0.00038
+nearly sorted  50000                           51156                  1157              0.005               52167          0.0021
+       random  50000  not run (estimate 562,538,750)  estimate 562,488,750            not run              355909         0.00645
+
+E2  is_blocked  (1000 queries, half present)
+blocklist_size  queries  sequential_comparisons  hash_lookups  sequential_seconds  hash_seconds
+          1000     1000                  748022          1000              0.0175       7.3e-05
+         10000     1000                 7544311          1000              0.1951      0.000104
+        100000     1000                75396223          1000              2.7973      0.000139
+
+E3  find_signature  (random logs of 200,000 characters; last row = worst case for brute force)
+                  log_type  log_length  pattern_length  occurrences  brute_comparisons  horspool_comparisons  brute_seconds  horspool_seconds  builtin_seconds
+                random log      200000               4           40             207835                 55287         0.0267            0.0092         0.000144
+                random log      200000               8           40             208130                 30129         0.0274            0.0056         0.000148
+                random log      200000              16           40             208195                 17130          0.029            0.0045          9.9e-05
+worst case for brute force       10000               8            0              79944                  9993          0.007            0.0019          1.7e-05
+
+E4a closest_logins: distance computations (random points in 1000 x 1000)
+   n  original_ordered_pairs  corrected_bruteforce  optimised_pruned  divide_and_conquer  pruned_mean_of_5  dc_mean_of_5
+1000                 1000000                499500              1982                1118              1647          1123
+2000                 4000000               1999000              2503                2300              2826          2290
+4000                16000000               7998000              5794                4575              5272          4649
+8000                64000000              31996000             13478                9391             10692          9346
+
+E4b closest_logins: run time in seconds and the closest pair found
+   n  original_seconds  bruteforce_seconds  pruned_seconds  dc_seconds  closest_pair  closest_distance
+1000             0.204                0.14          0.0013      0.0069    (206, 640)            1.3476
+2000             0.976               0.438          0.0016      0.0095  (1252, 1876)            0.4406
+4000             3.277               1.582          0.0032      0.0182  (1546, 1854)            0.1534
+8000            13.122               6.885          0.0079      0.0452  (5925, 7532)            0.1022
+
+E4c closest_logins WORST CASE for simple pruning: points on two vertical lines
+   n  corrected_bruteforce  optimised_pruned  divide_and_conquer  bruteforce_seconds  pruned_seconds  dc_seconds
+1000                499500            249500                1080               0.126           0.064      0.0051
+2000               1999000            999000                2136               0.428           0.216      0.0132
+4000               7998000           3998000                4280               1.589           0.798      0.0409
+
+All algorithms agreed on every dataset. CSV files and graphs saved.
