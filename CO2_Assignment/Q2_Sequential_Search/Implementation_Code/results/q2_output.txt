@@ -1,0 +1,34 @@
+=== Q2 Part 1: comparisons for successful / unsuccessful searches ===
+       n   first     25%  middle     75%    last  unsucc.  avg succ (1000 rnd)   (n+1)/2
+     100       1      25      50      75     100      100                 49.5      50.5
+    1000       1     250     500     750    1000     1000                487.1     500.5
+   10000       1    2500    5000    7500   10000    10000               4847.9    5000.5
+  100000       1   25000   50000   75000  100000   100000              48531.2   50000.5
+
+Measured cost per comparison (best of 7 full scans of 100,000): 61.8 ns
+Measured hash-index lookup (dict on ToolID): 55.6 ns per lookup
+
+=== Q2 Part 2: latency of one sequential search (avg successful = n/2, unsuccessful = n) ===
+        n   avg successful   unsuccessful
+      100        0.0031 ms      0.0062 ms
+     1000        0.0309 ms      0.0618 ms
+    10000        0.3088 ms      0.6176 ms
+   100000        3.0880 ms      6.1761 ms
+  1000000       30.8803 ms     61.7607 ms
+
+=== Q2 Part 3: operating boundary (latency budget 50 ms, CPU budget 10% of one core) ===
+Latency boundary: worst-case scan <= 50 ms -> n <= 809,576 records (independent of request rate)
+  requests/s     max n (CPU 10%, avg n/2 scan)    max n (unsuccessful, n scan)
+         0.1                        32,383,063                      16,191,531
+           1                         3,238,306                       1,619,153
+          10                           323,830                         161,915
+         100                            32,383                          16,191
+        1000                             3,238                           1,619
+       10000                               323                             161
+
+=== Q2 Part 4: changed condition - one hangar vs 20 facilities (model) ===
+scenario                                              records   req/s  scan ms (n/2)  CPU load %  hash CPU %
+1 hangar                                                  800     0.2         0.0247      0.0005    0.000001
+20 facilities (x20 records, x20 requests)              16,000     4.0         0.4941      0.1976    0.000022
+20 facilities, busy shift peak (x10 burst)             16,000    40.0         0.4941      1.9763    0.000222
+20 facilities, organisation-wide dashboards/bots       16,000   500.0         0.4941     24.7043    0.002781

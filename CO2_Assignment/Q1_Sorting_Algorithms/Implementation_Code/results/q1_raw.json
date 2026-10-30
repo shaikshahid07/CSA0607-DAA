@@ -1,0 +1,307 @@
+{
+ "rows": [
+  {
+   "n": 1000,
+   "dataset": "D1 Random",
+   "algorithm": "Selection",
+   "inversions": 238575,
+   "comparisons": 499500,
+   "movements": 995,
+   "time_ms": 24.665
+  },
+  {
+   "n": 1000,
+   "dataset": "D1 Random",
+   "algorithm": "Bubble",
+   "inversions": 238575,
+   "comparisons": 498680,
+   "movements": 238575,
+   "time_ms": 46.966
+  },
+  {
+   "n": 1000,
+   "dataset": "D1 Random",
+   "algorithm": "Insertion",
+   "inversions": 238575,
+   "comparisons": 239569,
+   "movements": 238575,
+   "time_ms": 22.823
+  },
+  {
+   "n": 1000,
+   "dataset": "D2 Nearly sorted (95%)",
+   "algorithm": "Selection",
+   "inversions": 22598,
+   "comparisons": 499500,
+   "movements": 972,
+   "time_ms": 24.28
+  },
+  {
+   "n": 1000,
+   "dataset": "D2 Nearly sorted (95%)",
+   "algorithm": "Bubble",
+   "inversions": 22598,
+   "comparisons": 498680,
+   "movements": 22598,
+   "time_ms": 30.864
+  },
+  {
+   "n": 1000,
+   "dataset": "D2 Nearly sorted (95%)",
+   "algorithm": "Insertion",
+   "inversions": 22598,
+   "comparisons": 23597,
+   "movements": 22598,
+   "time_ms": 2.229
+  },
+  {
+   "n": 1000,
+   "dataset": "D3 Reverse sorted",
+   "algorithm": "Selection",
+   "inversions": 499500,
+   "comparisons": 499500,
+   "movements": 500,
+   "time_ms": 24.234
+  },
+  {
+   "n": 1000,
+   "dataset": "D3 Reverse sorted",
+   "algorithm": "Bubble",
+   "inversions": 499500,
+   "comparisons": 499500,
+   "movements": 499500,
+   "time_ms": 59.877
+  },
+  {
+   "n": 1000,
+   "dataset": "D3 Reverse sorted",
+   "algorithm": "Insertion",
+   "inversions": 499500,
+   "comparisons": 499500,
+   "movements": 499500,
+   "time_ms": 45.841
+  },
+  {
+   "n": 1000,
+   "dataset": "Extra: Already sorted",
+   "algorithm": "Selection",
+   "inversions": 0,
+   "comparisons": 499500,
+   "movements": 0,
+   "time_ms": 23.803
+  },
+  {
+   "n": 1000,
+   "dataset": "Extra: Already sorted",
+   "algorithm": "Bubble",
+   "inversions": 0,
+   "comparisons": 999,
+   "movements": 0,
+   "time_ms": 0.059
+  },
+  {
+   "n": 1000,
+   "dataset": "Extra: Already sorted",
+   "algorithm": "Insertion",
+   "inversions": 0,
+   "comparisons": 999,
+   "movements": 0,
+   "time_ms": 0.088
+  },
+  {
+   "n": 1000,
+   "dataset": "Extra: All equal",
+   "algorithm": "Selection",
+   "inversions": 0,
+   "comparisons": 499500,
+   "movements": 0,
+   "time_ms": 23.19
+  },
+  {
+   "n": 1000,
+   "dataset": "Extra: All equal",
+   "algorithm": "Bubble",
+   "inversions": 0,
+   "comparisons": 999,
+   "movements": 0,
+   "time_ms": 0.057
+  },
+  {
+   "n": 1000,
+   "dataset": "Extra: All equal",
+   "algorithm": "Insertion",
+   "inversions": 0,
+   "comparisons": 999,
+   "movements": 0,
+   "time_ms": 0.085
+  }
+ ],
+ "scale": [
+  {
+   "n": 250,
+   "dataset": "D2 Nearly sorted (95%)",
+   "algorithm": "Selection",
+   "inversions": 1457,
+   "comparisons": 31125,
+   "movements": 245,
+   "time_ms": 1.323
+  },
+  {
+   "n": 250,
+   "dataset": "D2 Nearly sorted (95%)",
+   "algorithm": "Bubble",
+   "inversions": 1457,
+   "comparisons": 31115,
+   "movements": 1457,
+   "time_ms": 1.601
+  },
+  {
+   "n": 250,
+   "dataset": "D2 Nearly sorted (95%)",
+   "algorithm": "Insertion",
+   "inversions": 1457,
+   "comparisons": 1706,
+   "movements": 1457,
+   "time_ms": 0.145
+  },
+  {
+   "n": 500,
+   "dataset": "D2 Nearly sorted (95%)",
+   "algorithm": "Selection",
+   "inversions": 6686,
+   "comparisons": 124750,
+   "movements": 486,
+   "time_ms": 5.878
+  },
+  {
+   "n": 500,
+   "dataset": "D2 Nearly sorted (95%)",
+   "algorithm": "Bubble",
+   "inversions": 6686,
+   "comparisons": 124705,
+   "movements": 6686,
+   "time_ms": 6.573
+  },
+  {
+   "n": 500,
+   "dataset": "D2 Nearly sorted (95%)",
+   "algorithm": "Insertion",
+   "inversions": 6686,
+   "comparisons": 7185,
+   "movements": 6686,
+   "time_ms": 0.639
+  },
+  {
+   "n": 1000,
+   "dataset": "D2 Nearly sorted (95%)",
+   "algorithm": "Selection",
+   "inversions": 22598,
+   "comparisons": 499500,
+   "movements": 972,
+   "time_ms": 54.581
+  },
+  {
+   "n": 1000,
+   "dataset": "D2 Nearly sorted (95%)",
+   "algorithm": "Bubble",
+   "inversions": 22598,
+   "comparisons": 498680,
+   "movements": 22598,
+   "time_ms": 35.283
+  },
+  {
+   "n": 1000,
+   "dataset": "D2 Nearly sorted (95%)",
+   "algorithm": "Insertion",
+   "inversions": 22598,
+   "comparisons": 23597,
+   "movements": 22598,
+   "time_ms": 2.303
+  },
+  {
+   "n": 2000,
+   "dataset": "D2 Nearly sorted (95%)",
+   "algorithm": "Selection",
+   "inversions": 88169,
+   "comparisons": 1999000,
+   "movements": 1973,
+   "time_ms": 97.991
+  },
+  {
+   "n": 2000,
+   "dataset": "D2 Nearly sorted (95%)",
+   "algorithm": "Bubble",
+   "inversions": 88169,
+   "comparisons": 1998010,
+   "movements": 88169,
+   "time_ms": 126.576
+  },
+  {
+   "n": 2000,
+   "dataset": "D2 Nearly sorted (95%)",
+   "algorithm": "Insertion",
+   "inversions": 88169,
+   "comparisons": 90168,
+   "movements": 88169,
+   "time_ms": 9.135
+  }
+ ],
+ "sens": [
+  [
+   0,
+   {
+    "Selection": 499500,
+    "Bubble": 999,
+    "Insertion": 999
+   }
+  ],
+  [
+   1,
+   {
+    "Selection": 499500,
+    "Bubble": 498419,
+    "Insertion": 5263
+   }
+  ],
+  [
+   5,
+   {
+    "Selection": 499500,
+    "Bubble": 498834,
+    "Insertion": 26288
+   }
+  ],
+  [
+   10,
+   {
+    "Selection": 499500,
+    "Bubble": 498834,
+    "Insertion": 50730
+   }
+  ],
+  [
+   25,
+   {
+    "Selection": 499500,
+    "Bubble": 498834,
+    "Insertion": 109890
+   }
+  ],
+  [
+   50,
+   {
+    "Selection": 499500,
+    "Bubble": 498834,
+    "Insertion": 194088
+   }
+  ],
+  [
+   100,
+   {
+    "Selection": 499500,
+    "Bubble": 498834,
+    "Insertion": 255011
+   }
+  ]
+ ]
+}

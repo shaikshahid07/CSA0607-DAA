@@ -1,0 +1,39 @@
+=== Q7 Part A: diagnosis of the Q6 solution (measured) ===
+n=14: candidates 16,384; additions performed ~ n*2^n = 229,376; feasible 8,192; feasible candidates that improved the best: 25 (0.3052% of feasible) -> 16,384 - 25 evaluations never changed the answer
+n=18: candidates 262,144; additions performed ~ n*2^n = 4,718,592; feasible 131,870; feasible candidates that improved the best: 57 (0.0432% of feasible) -> 262,144 - 57 evaluations never changed the answer
+n=20: candidates 1,048,576; additions performed ~ n*2^n = 20,971,520; feasible 524,288; feasible candidates that improved the best: 46 (0.0088% of feasible) -> 1,048,576 - 46 evaluations never changed the answer
+
+=== Q7 Part B: head-to-head, same instance, same optimum (random family) ===
+  n   V0 cand.   V1 nodes  V2 nodes  V2 vs 2^n    V0 s    V1 s     V2 s speed-up V2  optimum all equal
+  8        256        294        23    8.9844%  0.0001  0.0002  0.00003        4.7x      252      True
+ 10      1,024      1,245        16    1.5625%  0.0006  0.0002  0.00002       37.8x      322      True
+ 14     16,384     19,539        19    0.1160%  0.0137  0.0028  0.00005      300.0x      595      True
+ 18    262,144    320,098        41    0.0156%  0.2979  0.0649  0.00009     3308.0x      664      True
+ 20  1,048,576  1,241,832        54    0.0051%  1.1999  0.1851  0.00026     4599.7x      762      True
+ 22  4,194,304  4,760,446        38    0.0009%  6.5899  1.0828  0.00007    91435.6x     1016      True
+
+=== Q7 Part C: robustness - V2 over 10 random instances per size (node cap 3,000,000) ===
+   n  median nodes   max nodes  median s    max s   median % of 2^n  all optimal(DP)
+  10            24          41    0.0000   0.0001       2.34375000%  True
+  20            59          82    0.0000   0.0001       0.00562668%  True
+  30            78         154    0.0001   0.0003       0.00000726%  True
+  40           134         265    0.0003   0.0004       0.00000001%  True
+  50            84         209    0.0002   0.0005       0.00000000%  True
+  60           158         359    0.0002   0.0003       0.00000000%  True
+
+=== Q7 Part D: adversarial family - strongly correlated (value = weight + 10), V2, 5 instances, cap 300,000 nodes ===
+   n  median nodes  max nodes  capped runs  median % of 2^n  median s
+  16           190        539            0         0.28992%     0.000
+  20           115        145            0         0.01097%     0.000
+  24            93      2,741            0         0.00055%     0.000
+  28           668     30,257            0         0.00025%     0.000
+  32           844     46,999            0         0.00002%     0.000
+
+Correlated n=20 instance: exhaustive 1,048,576 cand 1.248s | V1 1,280,567 nodes 0.198s | V2 139 nodes 0.000s | optima equal: True
+
+=== Q7 Part E: designed worst case for the bound - all weights even, value = weight, odd payload limit (no exact fill exists) ===
+   n    V2 nodes   % of 2^n   time s  capped (1M)   V1 nodes   V0 cand.
+  12       3,081    75.220%    0.001        False      5,173      4,096
+  16      24,996    38.141%    0.013        False     74,716     65,536
+  20     480,954    45.867%    0.341        False  1,000,001  1,048,576
+  24   1,000,001     5.960%    0.499         True  1,000,001 16,777,216

@@ -1,0 +1,27 @@
+Demo with 4 drones [(0, 0), (10, 10), (3, 4), (11, 12)]
+  closest: (10, 10) and (11, 12), distance 2.236; pairs examined 6 (= 4*3/2 = 6)
+
+=== Q4: pairs, distance calculations and time ===
+     n  pairs examined      n(n-1)/2    dist calcs  time (s)  us/pair  closest dist
+   100           4,950         4,950         4,950    0.0008    0.152        15.000
+   250          31,125        31,125        31,125    0.0047    0.149        15.000
+   500         124,750       124,750       124,750    0.0195    0.157        15.000
+  1000         499,500       499,500       499,500    0.0795    0.159         1.000
+  2000       1,999,000     1,999,000     1,999,000    0.3389    0.170         1.000
+  4000       7,998,000     7,998,000     7,998,000    1.4491    0.181         1.000
+  8000      31,996,000    31,996,000    31,996,000    6.6259    0.207         0.000
+
+Fitted cost per pair (n>=1000): 0.200 microseconds
+Growth check - ratio of successive times when n doubles:
+  n 1000 -> 2000: time x4.26   pairs x4.00
+  n 2000 -> 4000: time x4.28   pairs x4.00
+  n 4000 -> 8000: time x4.57   pairs x4.00
+
+Acceptable response time = 1 s per position update  ->  brute force breaks at about n = 3,163 drones
+   limit  0.1 s  ->  n ~ 1,000
+   limit  0.5 s  ->  n ~ 2,237
+   limit  1.0 s  ->  n ~ 3,163
+   limit  5.0 s  ->  n ~ 7,073
+   predicted time at n =  10,000: 10.0 s
+   predicted time at n =  50,000: 249.8 s
+   predicted time at n = 100,000: 999.4 s

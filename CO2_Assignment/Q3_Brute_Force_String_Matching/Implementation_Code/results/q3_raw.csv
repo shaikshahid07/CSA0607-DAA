@@ -1,0 +1,6 @@
+test,n,m,position,comparisons,ratio_c_over_n,time_ms
+A low work ,10000,9,-1,9992,0.999,0.981
+B high work,10000,50,-1,497550,49.755,40.567
+C log text ,10163,21,10128,13389,1.317,1.305
+D match at start,10021,21,0,21,0.002,0.002
+E pattern longer than text,3,6,-1,0,0.0,0.0

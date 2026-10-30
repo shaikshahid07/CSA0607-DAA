@@ -1,0 +1,69 @@
+{
+ "rows": [
+  {
+   "n": 100,
+   "pairs": 4950,
+   "theory": 4950,
+   "dist_calcs": 4950,
+   "time_s": 0.0008,
+   "us_per_pair": 0.1521,
+   "closest": 15.0
+  },
+  {
+   "n": 250,
+   "pairs": 31125,
+   "theory": 31125,
+   "dist_calcs": 31125,
+   "time_s": 0.0047,
+   "us_per_pair": 0.1494,
+   "closest": 15.0
+  },
+  {
+   "n": 500,
+   "pairs": 124750,
+   "theory": 124750,
+   "dist_calcs": 124750,
+   "time_s": 0.0195,
+   "us_per_pair": 0.1566,
+   "closest": 15.0
+  },
+  {
+   "n": 1000,
+   "pairs": 499500,
+   "theory": 499500,
+   "dist_calcs": 499500,
+   "time_s": 0.0795,
+   "us_per_pair": 0.1591,
+   "closest": 1.0
+  },
+  {
+   "n": 2000,
+   "pairs": 1999000,
+   "theory": 1999000,
+   "dist_calcs": 1999000,
+   "time_s": 0.3389,
+   "us_per_pair": 0.1695,
+   "closest": 1.0
+  },
+  {
+   "n": 4000,
+   "pairs": 7998000,
+   "theory": 7998000,
+   "dist_calcs": 7998000,
+   "time_s": 1.4491,
+   "us_per_pair": 0.1812,
+   "closest": 1.0
+  },
+  {
+   "n": 8000,
+   "pairs": 31996000,
+   "theory": 31996000,
+   "dist_calcs": 31996000,
+   "time_s": 6.6259,
+   "us_per_pair": 0.2071,
+   "closest": 0.0
+  }
+ ],
+ "c": 1.9987997881979172e-07,
+ "n_lim": 3163
+}
