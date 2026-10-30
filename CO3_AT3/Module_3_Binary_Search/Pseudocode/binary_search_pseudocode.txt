@@ -1,0 +1,24 @@
+MODULE 3 - BINARY SEARCH FOR ORDER LOOKUP
+Precondition: A[0..n-1] is sorted by timestamp (output of Module 1)
+
+ALGORITHM BinarySearch(A, lo, hi, key)            // returns ANY match
+    if lo > hi then return -1                     // empty range
+    mid <- floor((lo + hi) / 2)                   // DIVIDE
+    if A[mid].timestamp = key then return mid
+    if A[mid].timestamp < key then return BinarySearch(A, mid + 1, hi, key)   // CONQUER
+    else                           return BinarySearch(A, lo, mid - 1, key)   // (no combine)
+
+ALGORITHM FirstOccurrence(A, n, key)              // MODIFIED: FIRST match
+    lo <- 0 ; hi <- n - 1 ; first <- -1
+    while lo <= hi do
+        mid <- lo + floor((hi - lo) / 2)
+        if A[mid].timestamp = key then
+            first <- mid                          // remember the hit ...
+            hi <- mid - 1                         // ... but keep searching to the LEFT
+        else if A[mid].timestamp < key then lo <- mid + 1
+        else hi <- mid - 1
+    return first                                  // -1 if the key is absent
+
+Recurrence : T(n) = T(n/2) + 1, T(1) = 1  =>  T(n) = floor(lg n) + 1
+Time       : O(log n) worst, O(1) best (standard version)
+Extra space: O(1) iterative, O(log n) recursive

@@ -1,0 +1,58 @@
+======================================================================
+MODULE 1 - MERGE SORT TRACE (sample orders)
+======================================================================
+Input  : [(105,O1), (102,O2), (105,O3), (101,O4), (102,O5), (103,O6)]
+DIVIDE  [(105,O1), (102,O2), (105,O3), (101,O4), (102,O5), (103,O6)] -> [(105,O1), (102,O2), (105,O3)] | [(101,O4), (102,O5), (103,O6)]
+  DIVIDE  [(105,O1), (102,O2), (105,O3)] -> [(105,O1), (102,O2)] | [(105,O3)]
+    DIVIDE  [(105,O1), (102,O2)] -> [(105,O1)] | [(102,O2)]
+MERGE #1: [(105,O1)] + [(102,O2)] -> [(102,O2), (105,O1)]
+MERGE #2: [(102,O2), (105,O1)] + [(105,O3)] -> [(102,O2), (105,O1), (105,O3)]
+  DIVIDE  [(101,O4), (102,O5), (103,O6)] -> [(101,O4), (102,O5)] | [(103,O6)]
+    DIVIDE  [(101,O4), (102,O5)] -> [(101,O4)] | [(102,O5)]
+MERGE #3: [(101,O4)] + [(102,O5)] -> [(101,O4), (102,O5)]
+MERGE #4: [(101,O4), (102,O5)] + [(103,O6)] -> [(101,O4), (102,O5), (103,O6)]
+MERGE #5: [(102,O2), (105,O1), (105,O3)] + [(101,O4), (102,O5), (103,O6)] -> [(101,O4), (102,O2), (102,O5), (103,O6), (105,O1), (105,O3)]
+Output : [(101,O4), (102,O2), (102,O5), (103,O6), (105,O1), (105,O3)]
+Comparisons used: 10
+
+STABILITY CHECK (equal timestamps keep arrival order)
+  timestamp 101: arrival ['O4'] -> sorted ['O4']  OK
+  timestamp 102: arrival ['O2', 'O5'] -> sorted ['O2', 'O5']  OK
+  timestamp 103: arrival ['O6'] -> sorted ['O6']  OK
+  timestamp 105: arrival ['O1', 'O3'] -> sorted ['O1', 'O3']  OK
+
+======================================================================
+COMPARISON ESTIMATES FOR 10,000,000 ORDERS
+======================================================================
+log2(n)                      = 23.2535  (ceil = 24)
+n*log2(n)                    = 232,534,967
+Worst case  n*ceil(lg n) - 2^ceil(lg n) + 1 = 223,222,785
+Best case  ~ (n/2) lg n      = 116,267,483
+Order records: 16 bytes each -> data = 160 MB; auxiliary buffer = 160 MB; total ~ 320 MB
+
+======================================================================
+RECURRENCE CHECK: measured comparisons vs  n lg n - n + 1
+======================================================================
+       n   measured(random)   formula n lg n-n+1
+       8                 15                   17
+      32                122                  129
+     128                739                  769
+     512              3,970                4,097
+    2048             19,967               20,481
+    8192             96,113               98,305
+
+======================================================================
+EXTERNAL MERGE SORT DEMO (data larger than 'RAM')
+======================================================================
+40 orders, RAM holds 10 -> 4 sorted runs written to disk
+Merged output sorted: True | stable vs reference: True
+For 10,000,000 orders with 1,000,000 fitting in RAM: 10 runs, one 10-way merge pass, heap of 10 entries -> O(n log k) = 33,219,281 comparisons
+
+TIMING (random data)
+n=  1000  comparisons=     8,712  time=0.0019s
+n=  2000  comparisons=    19,379  time=0.0044s
+n=  4000  comparisons=    42,889  time=0.0096s
+n=  8000  comparisons=    93,581  time=0.0223s
+n= 16000  comparisons=   203,315  time=0.0571s
+n= 32000  comparisons=   438,370  time=0.1822s
+n= 64000  comparisons=   941,183  time=0.2969s

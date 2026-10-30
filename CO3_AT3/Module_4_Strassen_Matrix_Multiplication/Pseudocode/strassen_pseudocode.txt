@@ -1,0 +1,22 @@
+MODULE 4 - STRASSEN'S MATRIX MULTIPLICATION FOR RECOMMENDATION SCORES
+Input: A, B of size n x n, n a power of 2 (pad with zeros otherwise)
+
+ALGORITHM Strassen(A, B, n)
+    if n <= CUTOFF then return ConventionalMultiply(A, B)       // hybrid leaf
+    split A and B into four n/2 x n/2 blocks each               // DIVIDE
+    M1 <- Strassen(A11 + A22, B11 + B22, n/2)                   // CONQUER: seven products
+    M2 <- Strassen(A21 + A22, B11,       n/2)
+    M3 <- Strassen(A11,       B12 - B22, n/2)
+    M4 <- Strassen(A22,       B21 - B11, n/2)
+    M5 <- Strassen(A11 + A12, B22,       n/2)
+    M6 <- Strassen(A21 - A11, B11 + B12, n/2)
+    M7 <- Strassen(A12 - A22, B21 + B22, n/2)
+    C11 <- M1 + M4 - M5 + M7                                    // COMBINE
+    C12 <- M3 + M5
+    C21 <- M2 + M4
+    C22 <- M1 - M2 + M3 + M6
+    return [C11 C12 ; C21 C22]
+
+Recurrence : T(n) = 7 T(n/2) + 18 (n/2)^2 ;  multiplications M(n) = 7 M(n/2), M(1) = 1
+Solution   : M(n) = n^(log2 7) ~ n^2.807 ;  Theta(n^2.807)  (Master Theorem case 1)
+Space      : Theta(n^2) (about 3 n^2 extra elements for temporaries)

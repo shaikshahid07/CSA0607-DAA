@@ -1,0 +1,67 @@
+======================================================================
+MODULE 4 - STRASSEN on the 2 x 2 sample
+======================================================================
+A = [[1, 7], [3, 5]]  B = [[1, 3], [7, 5]]
+M1 = (a11+a22)(b11+b22) = (1+5)(1+5) = 36
+M2 = (a21+a22) b11      = (3+5)(1)       = 8
+M3 = a11 (b12-b22)      = 1(3-5)         = -2
+M4 = a22 (b21-b11)      = 5(7-1)         = 30
+M5 = (a11+a12) b22      = (1+7)(5)       = 40
+M6 = (a21-a11)(b11+b12) = (3-1)(1+3) = 8
+M7 = (a12-a22)(b21+b22) = (7-5)(7+5) = 24
+C11 = M1+M4-M5+M7 = 36+30-40+24 = 50
+C12 = M3+M5       = -2+40 = 38
+C21 = M2+M4       = 8+30 = 38
+C22 = M1-M2+M3+M6 = 36-8+-2+8 = 34
+Strassen result    : [[50, 38], [38, 34]]
+Conventional result: [[50, 38], [38, 34]] (8 multiplications; Strassen used 7)
+Verification: MATCH
+  M1..M7 = [36, 8, -2, 30, 40, 8, 24]
+Library function strassen(): [[50, 38], [38, 34]]
+
+A 4 x 4 check (random integers) with full recursion:
+  strassen(A4,B4) == conventional(A4,B4): MATCH
+  mults conventional = 64  Strassen = 49 (7^2)
+
+======================================================================
+SCALAR OPERATIONS FOR n = 1024
+======================================================================
+Conventional: multiplications n^3 = 1,073,741,824; additions n^2(n-1) = 1,072,693,248; total = 2,146,435,072
+Strassen (full recursion to 1x1): multiplications 7^10 = 282,475,249
+   multiplication ratio = 0.2631  (saving 73.7%)
+   additions 6(7^10-4^10) = 1,688,560,038; total = 1,971,035,287
+   exponent log2(7) = 2.8074;  n^log2(7) = 282,475,249
+
+Hybrid: Strassen above the cutoff, conventional at the leaves
+ cutoff  multiplications        additions        total ops  vs conventional
+      1      282,475,249    1,688,560,038    1,971,035,287           0.918x
+      2      322,828,856    1,123,609,540    1,446,438,396           0.674x
+      4      368,947,264      823,839,888    1,192,787,152           0.556x
+      8      421,654,016      678,896,320    1,100,550,336           0.513x
+     16      481,890,304      626,189,568    1,108,079,872           0.516x
+     32      550,731,776      630,492,160    1,181,223,936           0.550x
+     64      629,407,744      672,288,768    1,301,696,512           0.606x
+    128      719,323,136      741,130,240    1,460,453,376           0.680x
+    256      822,083,584      831,848,448    1,653,932,032           0.771x
+    512      939,524,096      942,407,680    1,881,931,776           0.877x
+   1024    1,073,741,824    1,072,693,248    2,146,435,072           1.000x
+
+Memory: one 1024x1024 float64 matrix = 8 MiB; A, B, C = 24 MiB.
+Strassen temporaries (M1..M7 and the block sums) need about 3n^2 elements = 24 MiB extra with the straightforward implementation (geometric sum over the recursion levels).
+
+TIMING (numpy, float64)
+     n  conv(py loops)  numpy BLAS  Strassen c=1  hybrid c=64  hybrid c=128
+    64          0.0048      0.0001        0.4580       0.0000        0.0000
+   128          0.0226      0.0004        3.9258       0.0002        0.0001
+   256          0.1050      0.0016       25.0548       0.0026        0.0027
+   512             nan      0.0071           nan       0.0228        0.0136
+  1024             nan      0.0445           nan       0.2093        0.1208
+
+Cutoff experiment, n = 512 (numpy leaves, float64):
+  cutoff    8: 0.7064s
+  cutoff   16: 0.1688s
+  cutoff   32: 0.0393s
+  cutoff   64: 0.0177s
+  cutoff  128: 0.0117s
+  cutoff  256: 0.0080s
+  cutoff  512: 0.0051s

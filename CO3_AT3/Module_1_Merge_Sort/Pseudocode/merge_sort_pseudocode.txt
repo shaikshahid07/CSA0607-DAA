@@ -1,0 +1,37 @@
+MODULE 1 - MERGE SORT (stable) FOR NIGHTLY ORDER CONSOLIDATION
+Input : array A[0..n-1] of orders (timestamp, orderID) in gateway arrival order
+Output: A sorted by timestamp; equal timestamps keep arrival order
+
+ALGORITHM MergeSort(A, lo, hi)
+    if lo >= hi then return                      // base case: 0 or 1 element
+    mid <- floor((lo + hi) / 2)                  // DIVIDE
+    MergeSort(A, lo, mid)                        // CONQUER left half
+    MergeSort(A, mid + 1, hi)                    // CONQUER right half
+    Merge(A, lo, mid, hi)                        // COMBINE
+
+ALGORITHM Merge(A, lo, mid, hi)
+    L <- copy of A[lo..mid]
+    R <- copy of A[mid+1..hi]
+    i <- 0 ; j <- 0 ; k <- lo
+    while i < |L| and j < |R| do
+        if L[i].timestamp <= R[j].timestamp then   // '<=' : left wins ties (STABLE)
+            A[k] <- L[i] ; i <- i + 1
+        else
+            A[k] <- R[j] ; j <- j + 1
+        k <- k + 1
+    while i < |L| do A[k] <- L[i] ; i <- i + 1 ; k <- k + 1
+    while j < |R| do A[k] <- R[j] ; j <- j + 1 ; k <- k + 1
+
+Recurrence : T(n) = 2 T(n/2) + (n - 1) comparisons, T(1) = 0   =>  T(n) = n lg n - n + 1
+Time       : Theta(n log n) best, average and worst
+Extra space: O(n) auxiliary array
+
+ALGORITHM ExternalMergeSort(file F, memory capacity M records)           // data does not fit in RAM
+    runs <- empty list
+    repeat: read next M records of F into RAM
+            MergeSort them ; write the sorted run to disk ; append to runs
+    until F is exhausted
+    heap <- one entry (timestamp, runIndex, position) for the head of each run
+    while heap not empty do
+        extract min by (timestamp, runIndex)     // runIndex as tie-breaker keeps stability
+        write the record to output ; push next record of the same run

@@ -1,0 +1,43 @@
+======================================================================
+MODULE 2 - ONE PARTITION STEP on sample scores (pivot = first element)
+======================================================================
+Input: [42, 17, 63, 8, 55, 29]
+pivot = 42, i = 0
+  j=1: 17 < 42 -> i=1, swap a[1],a[1] -> [42, 17, 63, 8, 55, 29]
+  j=2: 63 >= 42 -> no swap, i=1 -> [42, 17, 63, 8, 55, 29]
+  j=3: 8 < 42 -> i=2, swap a[2],a[3] -> [42, 17, 8, 63, 55, 29]
+  j=4: 55 >= 42 -> no swap, i=2 -> [42, 17, 8, 63, 55, 29]
+  j=5: 29 < 42 -> i=3, swap a[3],a[5] -> [42, 17, 8, 29, 55, 63]
+Place pivot: swap a[0],a[3] -> [29, 17, 8, 42, 55, 63]
+Pivot 42 is at index 3; left = [29, 17, 8] (all < 42); right = [55, 63] (all >= 42)
+Comparisons in this partition: 5 (= n - 1)
+
+FULL SORT of the sample (first-element pivot):
+  sorted = [8, 17, 29, 42, 55, 63], comparisons = 9, recursion depth = 3
+
+======================================================================
+ESTIMATES FOR 100,000 SELLERS
+======================================================================
+Worst case (nearly sorted, first pivot): n(n-1)/2 = 4,999,950,000 comparisons
+Best / balanced case: ~ n lg n = 1,660,964 comparisons
+Ratio worst/best = 3,010x
+Recursion depth worst = 100,000 frames (stack overflow risk) vs ~17 balanced
+Average case (random pivot) ~ 2 n ln n = 2,302,585 comparisons
+
+======================================================================
+WORST-CASE DEMONSTRATION: nearly sorted data, first-element pivot
+======================================================================
+     n  first-pivot cmp     n(n-1)/2  depth |  median3 cmp  depth |  random cmp |     n lg n
+   100            4,859        4,950     98 |          480      6 |         713 |        664
+   200           19,725       19,900    197 |        1,153      7 |       1,588 |      1,529
+   400           79,200       79,800    395 |        2,698      8 |       3,763 |      3,458
+   800          315,997      319,600    791 |        6,187      9 |       8,427 |      7,715
+  1600        1,268,836    1,279,200   1583 |       13,965     11 |      18,736 |     17,030
+  3200        5,072,195    5,118,400   3167 |       31,119     12 |      43,200 |     37,260
+
+TIMING (nearly sorted data)
+n=  250 first:    30,827 cmp 0.0018s | median3:   1,505 cmp 0.0002s | random:   2,001 cmp 0.0002s
+n=  500 first:   123,810 cmp 0.0070s | median3:   3,500 cmp 0.0004s | random:   4,684 cmp 0.0006s
+n= 1000 first:   496,201 cmp 0.0290s | median3:   7,993 cmp 0.0011s | random:  10,561 cmp 0.0014s
+n= 2000 first: 1,980,537 cmp 0.1334s | median3:  17,976 cmp 0.0022s | random:  24,009 cmp 0.0034s
+n= 4000 first: 7,930,344 cmp 0.5201s | median3:  39,936 cmp 0.0052s | random:  52,344 cmp 0.0071s
