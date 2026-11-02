@@ -1,0 +1,53 @@
+========================================================================
+Q3 : KARATSUBA MULTIPLICATION VS STANDARD (SCHOOL-BOOK) MULTIPLICATION
+========================================================================
+Demo : 1234 x 5678
+x = 12*10^2 + 34    y = 56*10^2 + 78
+z0 = 2652   z2 = 672   z1 = 2840
+z2*10^4 + z1*10^2 + z0 = 7006652
+karatsuba  = 7006652  standard = 7006652  python = 7006652
+
+Experiment 1 : correctness on 200 random pairs (1 to 300 digits)
+Wrong answers : 0
+
+Experiment 2 : single-digit multiplication counts (n-digit numbers)
+n        Standard n^2   Karatsuba      n^1.585        Ratio     
+2        4              3              3              1.33      
+4        16             15             9              1.07      
+8        64             37             27             1.73      
+16       256            99             81             2.59      
+32       1024           329            243            3.11      
+64       4096           1073           729            3.82      
+128      16384          3297           2187           4.97      
+256      65536          9505           6561           6.89      
+512      262144         28611          19683          9.16      
+1024     1048576        86129          59049          12.17     
+
+Experiment 3 : timing (average of 7 runs, seconds)
+n        Standard       Karatsuba      Faster      
+4        0.000007       0.000005       Karatsuba   
+8        0.000013       0.000017       Standard    
+16       0.000028       0.000042       Standard    
+32       0.000091       0.000136       Standard    
+48       0.000185       0.000245       Standard    
+64       0.000333       0.000426       Standard    
+96       0.000748       0.000850       Standard    
+128      0.001171       0.001186       Standard    
+192      0.004330       0.003770       Karatsuba   
+256      0.009197       0.007091       Karatsuba   
+384      0.022232       0.013406       Karatsuba   
+512      0.026317       0.011630       Karatsuba   
+768      0.059387       0.024527       Karatsuba   
+1024     0.115404       0.040196       Karatsuba   
+
+Experiment 4 : hybrid Karatsuba (switch to standard below a cutoff), n = 1024 digits
+Cutoff       Time (s)      
+1            0.032402      
+4            0.039668      
+8            0.027142      
+16           0.021806      
+32           0.022656      
+64           0.026177      
+128          0.032369      
+
+Approximate crossover (Karatsuba wins from this size onwards) : 192 digits

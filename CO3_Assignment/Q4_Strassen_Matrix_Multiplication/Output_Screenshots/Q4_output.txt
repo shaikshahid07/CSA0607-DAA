@@ -1,0 +1,62 @@
+========================================================================
+Q4 : CONVENTIONAL VS STRASSEN MATRIX MULTIPLICATION
+========================================================================
+Demo 2x2 : A = [[1, 2], [3, 4]]  B = [[5, 6], [7, 8]]
+Conventional : [[19, 22], [43, 50]]  multiplications = 8
+Strassen     : [[19, 22], [43, 50]]  multiplications = 7
+
+Experiment 1 : correctness (pure Python, power-of-two sizes)
+n = 2    results equal : True
+n = 4    results equal : True
+n = 8    results equal : True
+n = 16   results equal : True
+n = 32   results equal : True
+
+Experiment 2 : correctness when n is NOT a power of two (padding)
+n = 3   padded to 4    equal : True   extra work (size/n)^3 = 2.37
+n = 5   padded to 8    equal : True   extra work (size/n)^3 = 4.10
+n = 6   padded to 8    equal : True   extra work (size/n)^3 = 2.37
+n = 10  padded to 16   equal : True   extra work (size/n)^3 = 4.10
+n = 13  padded to 16   equal : True   extra work (size/n)^3 = 1.86
+n = 20  padded to 32   equal : True   extra work (size/n)^3 = 4.10
+n = 33  padded to 64   equal : True   extra work (size/n)^3 = 7.29
+
+Experiment 3 : multiplication and addition counts (recursion down to 1x1)
+n      Conv mults     Strassen mults Strassen adds  n^2.807       
+2      8              7              18             7             
+4      64             49             198            49            
+8      512            343            1674           343           
+16     4096           2401           12870          2401          
+32     32768          16807          94698          16807         
+64     262144         117649         681318         117649        
+
+Experiment 4 : pure Python timing, recursion down to 1x1 (average of 3 runs)
+n      Conventional   Strassen       Faster      
+2      0.000005       0.000015       Conventional
+4      0.000010       0.000102       Conventional
+8      0.000056       0.000755       Conventional
+16     0.000424       0.005110       Conventional
+32     0.003096       0.036090       Conventional
+64     0.024986       0.266199       Conventional
+
+Experiment 5 : NumPy block versions, same leaf size (64), average of 3 runs (1 run for n = 4096)
+n      Conv blocks    Strassen       np full (@)    Faster       Equal   
+128    0.00020        0.00027        0.00011        Conventional True    
+256    0.00154        0.00234        0.00085        Conventional True    
+512    0.01187        0.01924        0.00518        Conventional True    
+1024   0.09115        0.11457        0.03559        Conventional True    
+2048   0.78530        0.85806        0.24538        Conventional True    
+4096   7.44568        6.72120        2.01840        Strassen     True    
+
+Experiment 6 : effect of the leaf size, n = 1024 (NumPy Strassen)
+Leaf       Time (s)      
+16         0.88841       
+32         0.30375       
+64         0.13625       
+128        0.08859       
+256        0.06589       
+512        0.07406       
+
+Experiment 7 : padding cost, n = 1025 compared with n = 1024 (NumPy Strassen, leaf 64)
+n = 1024  padded size = 1024  time = 0.11324 s   correct = True
+n = 1025  padded size = 2048  time = 0.80669 s   correct = True
