@@ -2,8 +2,8 @@
 
 Divide and Conquer: Max/Min, Binary Search, Merge Sort, Quick Sort, Karatsuba, Strassen, Closest Pair, Median of Medians, Meet-in-the-Middle and the Day-4 Design Challenge.
 
-* Student A: ____________________  (Reg. No. ____________)
-* Student B: ____________________  (Reg. No. ____________)
+* Student A: Shaik Shahid          (Reg. No.192424311)
+* Student B: Shaik Abdul azeez     (Reg. No. 192472015)
 
 ## Folder guide
 
