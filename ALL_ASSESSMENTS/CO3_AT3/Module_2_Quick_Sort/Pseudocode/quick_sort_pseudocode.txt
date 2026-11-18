@@ -1,0 +1,31 @@
+MODULE 2 - QUICK SORT FOR THE LIVE SELLER LEADERBOARD
+
+ALGORITHM QuickSort(A, lo, hi)                    // CURRENT design: first-element pivot
+    if lo < hi then
+        p <- Partition(A, lo, hi)                 // DIVIDE (all the work happens here)
+        QuickSort(A, lo, p - 1)                   // CONQUER left
+        QuickSort(A, p + 1, hi)                   // CONQUER right ; COMBINE = nothing
+
+ALGORITHM Partition(A, lo, hi)
+    pivot <- A[lo] ; i <- lo
+    for j <- lo + 1 to hi do
+        if A[j] < pivot then
+            i <- i + 1 ; swap A[i], A[j]
+    swap A[lo], A[i]
+    return i                                      // n - 1 comparisons
+
+Recurrences
+    Best / balanced : T(n) = 2 T(n/2) + (n - 1)   =>  Theta(n log n)
+    Worst (sorted / nearly sorted, first pivot) : T(n) = T(n - 1) + (n - 1)  =>  n(n - 1)/2 = Theta(n^2)
+
+ALGORITHM QuickSortImproved(A, lo, hi)            // PROPOSED: median-of-three + smaller-side recursion
+    while lo < hi do
+        if hi - lo + 1 <= 16 then InsertionSort(A, lo, hi) ; return
+        m <- index of the median of A[lo], A[(lo + hi)/2], A[hi]
+        swap A[lo], A[m]
+        p <- Partition(A, lo, hi)
+        if p - lo < hi - p then
+            QuickSortImproved(A, lo, p - 1) ; lo <- p + 1     // recurse on smaller side
+        else
+            QuickSortImproved(A, p + 1, hi) ; hi <- p - 1     // loop on larger side
+    // stack depth <= lg n ; optional: switch to HeapSort if depth > 2 lg n (introsort)

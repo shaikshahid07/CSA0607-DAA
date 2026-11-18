@@ -1,0 +1,27 @@
+Sample scores: [42, 17, 63, 8, 55, 29] 
+--- One partition step (pivot = first element = 42) ---
+  j=1: 17 < pivot 42  -> i=1, swap A[1]<->A[1]  -> [42, 17, 63, 8, 55, 29]
+  j=2: 63 >= pivot 42 -> no swap (i=1)            -> [42, 17, 63, 8, 55, 29]
+  j=3: 8 < pivot 42  -> i=2, swap A[2]<->A[3]  -> [42, 17, 8, 63, 55, 29]
+  j=4: 55 >= pivot 42 -> no swap (i=2)            -> [42, 17, 8, 63, 55, 29]
+  j=5: 29 < pivot 42  -> i=3, swap A[3]<->A[5]  -> [42, 17, 8, 29, 55, 63]
+Final: pivot 42 placed at index 3: left=[29, 17, 8] pivot=42 right=[55, 63]
+Comparisons in this partition: 5
+
+--- Full sort of sample (first-element pivot) ---
+[8, 17, 29, 42, 55, 63] comparisons: 9
+median-of-three: [8, 17, 29, 42, 55, 63] comparisons: 14
+
+--- Experiment: nearly sorted input (50 adjacent swaps) ---
+       n   first-pivot cmps       n(n-1)/2   med-of-3 cmps       n lg n  t_first(s)  t_med3(s)
+     500            112,079        124,750           4,210        4,483      0.0043     0.0003
+    1000            472,923        499,500           9,427        9,966      0.0177     0.0006
+    2000          1,940,868      1,999,000          20,872       21,932      0.0741     0.0015
+    4000          7,885,062      7,998,000          45,751       47,863      0.3116     0.0037
+    8000         31,766,596     31,996,000          99,510      103,726      1.6047     0.0122
+
+--- Production estimate: 100,000 sellers, nearly sorted ---
+First-element pivot (worst case) n(n-1)/2 = 4,999,950,000 comparisons
+Best / balanced  ~ n lg n                 = 1,660,964 comparisons
+Median-of-three on nearly sorted ~ n lg n = 1,660,964 (+3 per partition)
+Ratio worst/best = 3,010x

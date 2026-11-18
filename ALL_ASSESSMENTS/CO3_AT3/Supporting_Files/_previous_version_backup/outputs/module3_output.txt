@@ -1,0 +1,34 @@
+Sorted list (Module 1 output): [(101, 'O4'), (102, 'O2'), (102, 'O5'), (103, 'O6'), (105, 'O1'), (105, 'O3')]
+
+Standard binary search for 102 (may return any duplicate):
+  lo=0 hi=5 mid=2 A[mid]=102  key=102
+  -> index 2 (102, 'O5') in 1 comparisons
+
+First-occurrence search for 102:
+  lo=0 hi=5 mid=2 A[mid]=102  res=-1
+  lo=0 hi=1 mid=0 A[mid]=101  res=2
+  lo=1 hi=1 mid=1 A[mid]=102  res=2
+  -> index 1 (102, 'O2') in 3 comparisons
+
+First-occurrence search for 105:
+  lo=0 hi=5 mid=2 A[mid]=102  res=-1
+  lo=3 hi=5 mid=4 A[mid]=105  res=-1
+  lo=3 hi=3 mid=3 A[mid]=103  res=4
+  -> index 4 (105, 'O1') in 3 comparisons
+
+Search for missing timestamp 104: (-1, 3)
+
+--- Why sorted order is essential: same search on UNSORTED data ---
+Unsorted: [(105, 'O1'), (102, 'O2'), (105, 'O3'), (101, 'O4'), (102, 'O5'), (103, 'O6')] -> search 101: (-1, 2) (present at index 3 but NOT found)
+
+--- Validation vs bisect_left on 200,000 random timestamps (many duplicates) ---
+mismatches: 0 | worst comparisons seen: 18 | floor(lg n)+1 = 18
+
+--- Production: n = 10,000,000 orders ---
+lg n = 23.2535; maximum comparisons = floor(lg n)+1 = 24
+Linear search worst case = 10,000,000 comparisons; speed-up ~ 416,667x
+n=     1,000  max comparisons=10
+n=    10,000  max comparisons=14
+n=   100,000  max comparisons=17
+n= 1,000,000  max comparisons=20
+n=10,000,000  max comparisons=24
