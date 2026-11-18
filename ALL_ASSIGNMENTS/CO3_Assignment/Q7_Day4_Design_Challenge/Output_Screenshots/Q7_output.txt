@@ -1,0 +1,65 @@
+========================================================================
+Q7 : DAY-4 DESIGN CHALLENGE - MAXIMUM SUBARRAY SUM (DIVIDE AND CONQUER)
+========================================================================
+Demo array : [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+Student A initial design (best of the two halves only) : 4
+Student B initial design (total, prefix, suffix, best) : 6
+Joint final design                                     : 6
+Brute force baseline                                   : 6
+Kadane (independent check)                             : 6
+Correct answer is 6 from the subarray [4, -1, 2, 1] which crosses the middle.
+
+Experiment 1 : designed correctness test cases
+Case                     Brute    Kadane   A        B        Final   
+single element           7        7        7        7        7       
+two elements             3        3        3        3        3       
+all negative             -2       -2       -2       -2       -2      
+all positive             15       15       5        15       15        <- design A fails
+answer in left half      9        9        5        9        9         <- design A fails
+answer in right half     13       13       7        13       13        <- design A fails
+answer crosses middle    6        6        4        6        6         <- design A fails
+whole array              7        7        3        7        7         <- design A fails
+zeros and negatives      0        0        0        0        0       
+odd length               6        6        4        6        6         <- design A fails
+
+Experiment 2 : 2000 random arrays (length 1 to 60, values -50 to 50)
+Design A wrong answers      : 1831 out of 2000
+Crossing-scan version wrong : 0
+Joint final design wrong    : 0
+
+Experiment 3 : counted operations for increasing n
+n        Brute n(n+1)/2 Scan version   Joint final    n log2 n     5(n-1)      
+16       136            94             75             64           75          
+32       528            222            155            160          155         
+64       2080           510            315            384          315         
+128      8256           1150           635            896          635         
+256      32896          2558           1275           2048         1275        
+512      131328         5630           2555           4608         2555        
+1024     524800         12286          5115           10240        5115        
+2048     2098176        26622          10235          22528        10235       
+4096     8390656        57342          20475          49152        20475       
+8192     33558528       122878         40955          106496       40955       
+Joint final design performs exactly 5(n-1) counted operations : a straight line in n.
+
+Experiment 4 : timing in seconds (average of 3 runs)
+n        Brute        Scan D&C     Joint final  Kadane      
+100      0.00036      0.00018      0.00011      0.00003     
+500      0.00964      0.00077      0.00044      0.00011     
+1000     0.05800      0.00242      0.00123      0.00036     
+2000     0.15892      0.00347      0.00164      0.00049     
+4000     0.69360      0.00922      0.00404      0.00100     
+8000     skipped      0.01790      0.00645      0.00175     
+16000    skipped      0.03016      0.01253      0.00391     
+64000    skipped      0.13007      0.05055      0.01395     
+256000   skipped      0.60296      0.23384      0.05590     
+
+Experiment 5 : doubling test for the joint final design
+n        Operations     Ratio     
+1024     5115           -         
+2048     10235          2.001     
+4096     20475          2.000     
+8192     40955          2.000     
+16384    81915          2.000     
+32768    163835         2.000     
+65536    327675         2.000     
+A ratio of about 2 when n doubles means linear growth, which matches T(n) = 2T(n/2) + O(1).

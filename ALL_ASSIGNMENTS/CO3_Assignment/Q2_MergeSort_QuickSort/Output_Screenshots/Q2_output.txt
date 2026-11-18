@@ -1,0 +1,77 @@
+========================================================================
+Q2 : MERGE SORT AND QUICK SORT (pivot strategy = FIRST element)
+========================================================================
+Demo input        : [38, 27, 43, 3, 9, 82, 10]
+Merge sort output : [3, 9, 10, 27, 38, 43, 82]  comparisons = 13  depth = 4
+Quick sort output : [3, 9, 10, 27, 38, 43, 82]  comparisons = 13  depth = 5
+
+Experiment 1 : first three partitions, n = 15
+Balanced input  : [8, 4, 2, 1, 3, 6, 5, 7, 12, 10, 9, 11, 14, 13, 15]
+   depth 1 : left = 7, right = 7
+   depth 2 : left = 3, right = 3
+   depth 3 : left = 1, right = 1
+   depth 3 : left = 1, right = 1
+   depth 2 : left = 3, right = 3
+   depth 3 : left = 1, right = 1
+   depth 3 : left = 1, right = 1
+Sorted input    : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+   depth 1 : left = 0, right = 14
+   depth 2 : left = 0, right = 13
+   depth 3 : left = 0, right = 12
+   depth 4 : left = 0, right = 11
+   depth 5 : left = 0, right = 10
+   depth 6 : left = 0, right = 9
+   depth 7 : left = 0, right = 8
+
+Experiment 2 : comparisons, depth and time for different inputs
+n       Input        | QS comps   QS dep  QS time   | MS comps   MS dep  MS time  
+127     balanced     | 642        7       0.00007   | 584        8       0.00013   
+127     random       | 933        15      0.00013   | 722        8       0.00016   
+127     sorted       | 8001       127     0.00065   | 441        8       0.00012   
+127     reversed     | 8001       127     0.00054   | 447        8       0.00011   
+255     balanced     | 1538       8       0.00014   | 1364       9       0.00026   
+255     random       | 2218       17      0.00025   | 1744       9       0.00041   
+255     sorted       | 32385      255     0.00237   | 1016       9       0.00024   
+255     reversed     | 32385      255     0.00202   | 1023       9       0.00022   
+511     balanced     | 3586       9       0.00034   | 3113       10      0.00060   
+511     random       | 4301       16      0.00073   | 3960       10      0.00086   
+511     sorted       | 130305     511     0.00857   | 2295       10      0.00051   
+511     reversed     | 130305     511     0.00865   | 2303       10      0.00048   
+1023    balanced     | 8194       10      0.00067   | 6990       11      0.00130   
+1023    random       | 10553      19      0.00109   | 8931       11      0.00163   
+1023    sorted       | 522753     1023    0.03400   | 5110       11      0.00099   
+1023    reversed     | 522753     1023    0.03146   | 5119       11      0.00105   
+2047    balanced     | 18434      11      0.00149   | 15513      12      0.00268   
+2047    random       | 25755      23      0.00280   | 19944      12      0.00355   
+2047    sorted       | 2094081    2047    0.16149   | 11253      12      0.00217   
+2047    reversed     | 2094081    2047    0.12750   | 11263      12      0.00220   
+
+Experiment 3 : partition sizes for n = 1023 (first 5 partitions)
+balanced
+   depth 1 : left = 511, right = 511
+   depth 2 : left = 255, right = 255
+   depth 3 : left = 127, right = 127
+   depth 4 : left = 63, right = 63
+   depth 5 : left = 31, right = 31
+sorted
+   depth 1 : left = 0, right = 1022
+   depth 2 : left = 0, right = 1021
+   depth 3 : left = 0, right = 1020
+   depth 4 : left = 0, right = 1019
+   depth 5 : left = 0, right = 1018
+
+Experiment 4 : height of the recursion tree for different split ratios (n = 1,000,000)
+Split      Height formula         Height         
+50:50      log(n) / log(1/0.50)    19.9           
+25:75      log(n) / log(1/0.75)    48.0           
+10:90      log(n) / log(1/0.90)    131.1          
+1:99       log(n) / log(1/0.99)    1374.6         
+Totally unbalanced (1 : n-1) gives height n = 1000000
+
+Experiment 5 : quick sort comparisons vs n^2/2 and n log2 n on sorted input
+n        QS comps       n(n-1)/2       n log2 n      
+100      4950           4950           664           
+200      19900          19900          1529          
+400      79800          79800          3458          
+800      319600         319600         7715          
+1600     1279200        1279200        17030         

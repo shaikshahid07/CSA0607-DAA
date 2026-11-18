@@ -1,0 +1,52 @@
+========================================================================
+Q6 (A) : MEDIAN OF MEDIANS VS QUICKSELECT  (k-th smallest element)
+========================================================================
+Demo list : [12, 3, 5, 7, 4, 19, 26, 1, 15, 9, 21, 8, 30, 2, 17]
+Sorted    : [1, 2, 3, 4, 5, 7, 8, 9, 12, 15, 17, 19, 21, 26, 30]
+k = 1    median-of-medians = 1    sorted[k-1] = 1
+k = 4    median-of-medians = 4    sorted[k-1] = 4
+k = 8    median-of-medians = 9    sorted[k-1] = 9
+k = 15   median-of-medians = 30   sorted[k-1] = 30
+
+Experiment 1 : correctness on 300 random lists with random k
+Wrong answers : 0
+
+Experiment 2 : grouping strategy and pivot for a list of 25 numbers
+List    : [3, 38, 55, 45, 42, 8, 43, 58, 70, 59, 84, 1, 95, 5, 15, 20, 30, 53, 44, 52, 88, 97, 21, 64, 94]
+Groups (each sorted) :
+    [3, 38, 42, 45, 55]  median = 42
+    [8, 43, 58, 59, 70]  median = 58
+    [1, 5, 15, 84, 95]  median = 15
+    [20, 30, 44, 52, 53]  median = 44
+    [21, 64, 88, 94, 97]  median = 88
+Medians : [42, 58, 15, 44, 88]  median of medians (pivot) = 44
+Elements smaller than pivot : 11  larger : 13
+Guarantee : at least 3n/10 = 7.5 elements on each side
+
+Experiment 3 : comparisons on SORTED input, finding the median (k = n/2)
+n        QS first       QS random      Median-of-med  n^2/2         
+500      93875          1903           2573           125000          True
+1000     375250         3330           5311           500000          True
+2000     1500500        6505           10951          2000000         True
+4000     6001000        17466          22409          8000000         True
+8000     24002000       29794          45464          32000000        True
+
+Experiment 4 : steps (partition rounds) on sorted input, n = 8000, k = n/2
+first    pivot : 4000 rounds
+last     pivot : 4001 rounds
+random   pivot : 16 rounds
+
+Experiment 5 : randomised pivot is not perfect - 500 runs, n = 4000, sorted input, k = n/2
+Best    : 6461
+Average : 13503
+Median  : 13175
+Worst   : 28967
+Linear guarantee of median-of-medians (cost, fixed every time) : 22409
+Deterministic first-pivot cost (n^2/2 = 8,000,000)            : 6001000
+
+Experiment 6 : random data, timing in seconds (k = n/2, average of 5 runs)
+n        QS random      Median-of-med  sorted()      
+1000     0.00027        0.00086        0.00011       
+10000    0.00193        0.00911        0.00143       
+50000    0.01236        0.05034        0.01012       
+100000   0.03122        0.10528        0.02613       

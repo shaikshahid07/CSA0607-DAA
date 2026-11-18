@@ -1,0 +1,77 @@
+======================================================================
+Q1 PART A : FINDING MAXIMUM AND MINIMUM (DIVIDE AND CONQUER)
+======================================================================
+Demo list      : [8, 3, 15, 1, 9, 22, 4, 7]
+Max, Min       : 22 1
+Comparisons    : 10
+
+Experiment 1 : random data, sizes that are powers of two
+n        Predicted    Observed     Straight     Saved      Correct 
+2        1            1            2            1          True    
+4        4            4            6            2          True    
+8        10           10           14           4          True    
+16       22           22           30           8          True    
+32       46           46           62           16         True    
+64       94           94           126          32         True    
+128      190          190          254          64         True    
+256      382          382          510          128        True    
+512      766          766          1022         256        True    
+1024     1534         1534         2046         512        True    
+2048     3070         3070         4094         1024       True    
+4096     6142         6142         8190         2048       True    
+8192     12286        12286        16382        4096       True    
+16384    24574        24574        32766        8192       True    
+
+Experiment 2 : sizes that are NOT powers of two
+n        3n/2-2       Recurrence   Observed     Straight     Correct 
+3        3            3            3            4            True    
+5        6            6            6            8            True    
+6        7            8            8            10           True    
+7        9            9            9            12           True    
+10       13           14           14           18           True    
+25       36           39           39           48           True    
+100      148          162          162          198          True    
+333      498          536          536          664          True    
+1000     1498         1510         1510         1998         True    
+5000     7498         7950         7950         9998         True    
+12345    18516        20535        20535        24688        True    
+
+For n that is not a power of two the simple formula 3n/2-2 is only a lower estimate.
+The exact recurrence T(n)=T(n/2)+T(n-n/2)+2 matches the observed count every time.
+
+Experiment 3 : different kinds of data (n = 1024)
+random       comparisons = 1534   (max=10234, min=5)
+ascending    comparisons = 1534   (max=1023, min=0)
+descending   comparisons = 1534   (max=1024, min=1)
+all equal    comparisons = 1534   (max=5, min=5)
+
+======================================================================
+Q1 PART B : BINARY SEARCH
+======================================================================
+Sorted list    : [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]
+Search 23   -> index 5    comparisons = 3
+Search 2    -> index 0    comparisons = 3
+Search 91   -> index 9    comparisons = 4
+Search 40   -> index -1   comparisons = 4
+
+Experiment 4 : successful and unsuccessful searches (every element tested)
+n          log2(n)    Best case    Worst succ   Avg succ     Unsucc(max) 
+16         4          1            5            3.38         5           
+64         6          1            7            5.12         7           
+256        8          1            9            7.04         9           
+1024       10         1            11           9.01         11          
+4096       12         1            13           11.00        13          
+16384      14         1            15           13.00        15          
+65536      16         1            17           15.00        17          
+262144     18         1            19           17.00        19          
+
+Note: each loop pass counts as ONE comparison (the equality check at mid).
+Worst case should be floor(log2 n) + 1 comparisons (log2 n + 1 when n = 2^k).
+
+Experiment 5 : one million element array, a few searches
+target 0         index 0        comparisons = 19
+target 1000000   index 500000   comparisons = 19
+target 1999998   index 999999   comparisons = 20
+target 777       index -1       comparisons = 20
+target -5        index -1       comparisons = 19
+Linear search would need up to 1000000 comparisons.  log2(n) = 19.93
