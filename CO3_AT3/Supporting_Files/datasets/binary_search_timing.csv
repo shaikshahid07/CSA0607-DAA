@@ -1,3 +1,0 @@
-method,n,avg_seconds_per_lookup
-binary_first,1000000,0.000016198
-linear,1000000,0.024448009
