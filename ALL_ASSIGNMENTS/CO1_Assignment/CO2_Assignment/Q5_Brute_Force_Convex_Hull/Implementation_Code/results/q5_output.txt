@@ -1,0 +1,40 @@
+=== Q5: convex hull tests ===
+
+T1 mixed boundary/interior
+  input points: 20 (20 distinct)
+  hull vertices (6): [(8, 1), (2, 3), (1, 11), (9, 15), (15, 14), (18, 6)]
+  side tests with early exit: 1,295   without early exit: 3,420
+
+T2 designed: corners + on-edge + duplicates + interior
+  input points: 16 (14 distinct)
+  hull vertices (4): [(0, 0), (0, 10), (10, 10), (10, 0)]
+  side tests with early exit: 482   without early exit: 1,092
+
+T3 all collinear
+  input points: 8 (8 distinct)
+  hull vertices (2): [(0, 1), (7, 15)]
+  side tests with early exit: 48   without early exit: 168
+
+T4 12 points on a circle
+  input points: 12 (12 distinct)
+  hull vertices (12): [(0, -100), (-50, -87), (-87, -50), (-100, 0), (-87, 50), (-50, 87), (0, 100), (50, 87), (87, 50), (100, 0), (87, -50), (50, -87)]
+  side tests with early exit: 384   without early exit: 660
+
+Cross-check against independent algorithm (set equality of hull vertices):
+  T1 mixed boundary/interior     -> MATCH
+  T2 designed: corners + on-ed   -> MATCH
+  T3 all collinear               -> MATCH
+  T4 12 points on a circle       -> MATCH
+  20 random clustered 40-point sets (many collinear/duplicates): all MATCH
+
+=== Growth of work with n (random points) ===
+    n hull size  tests (early exit)  tests/n^2   full scan n(n-1)(n-2)/2  time (s)
+   20         7               1,446       3.62                     3,420     0.001
+   40         9               9,534       5.96                    29,640     0.004
+   80        14              65,111      10.17                   246,480     0.027
+  160        14             462,984      18.09                 2,009,760     0.205
+  320        15           3,432,563      33.52                16,230,720     1.129
+  640        18          25,087,951      61.25               130,458,240     7.400
+Log-log slope of early-exit tests vs n: 2.82   (full scan slope = 3)
+Scan-order experiment n=320: sorted-by-x scan order = 3,432,563 tests; shuffled scan order = 270,055 tests
+No-early-exit run at n=80: 246,480 tests (formula 246,480)

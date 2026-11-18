@@ -1,0 +1,28 @@
+n,dataset,algorithm,inversions,comparisons,movements,time_ms
+1000,D1 Random,Selection,238575,499500,995,24.665
+1000,D1 Random,Bubble,238575,498680,238575,46.966
+1000,D1 Random,Insertion,238575,239569,238575,22.823
+1000,D2 Nearly sorted (95%),Selection,22598,499500,972,24.28
+1000,D2 Nearly sorted (95%),Bubble,22598,498680,22598,30.864
+1000,D2 Nearly sorted (95%),Insertion,22598,23597,22598,2.229
+1000,D3 Reverse sorted,Selection,499500,499500,500,24.234
+1000,D3 Reverse sorted,Bubble,499500,499500,499500,59.877
+1000,D3 Reverse sorted,Insertion,499500,499500,499500,45.841
+1000,Extra: Already sorted,Selection,0,499500,0,23.803
+1000,Extra: Already sorted,Bubble,0,999,0,0.059
+1000,Extra: Already sorted,Insertion,0,999,0,0.088
+1000,Extra: All equal,Selection,0,499500,0,23.19
+1000,Extra: All equal,Bubble,0,999,0,0.057
+1000,Extra: All equal,Insertion,0,999,0,0.085
+250,D2 Nearly sorted (95%),Selection,1457,31125,245,1.323
+250,D2 Nearly sorted (95%),Bubble,1457,31115,1457,1.601
+250,D2 Nearly sorted (95%),Insertion,1457,1706,1457,0.145
+500,D2 Nearly sorted (95%),Selection,6686,124750,486,5.878
+500,D2 Nearly sorted (95%),Bubble,6686,124705,6686,6.573
+500,D2 Nearly sorted (95%),Insertion,6686,7185,6686,0.639
+1000,D2 Nearly sorted (95%),Selection,22598,499500,972,54.581
+1000,D2 Nearly sorted (95%),Bubble,22598,498680,22598,35.283
+1000,D2 Nearly sorted (95%),Insertion,22598,23597,22598,2.303
+2000,D2 Nearly sorted (95%),Selection,88169,1999000,1973,97.991
+2000,D2 Nearly sorted (95%),Bubble,88169,1998010,88169,126.576
+2000,D2 Nearly sorted (95%),Insertion,88169,90168,88169,9.135
