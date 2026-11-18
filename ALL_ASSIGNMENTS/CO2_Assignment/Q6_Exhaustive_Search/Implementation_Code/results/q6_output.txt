@@ -1,0 +1,59 @@
+=== Q6 correctness check, n=5, payload limit W=10 ===
+Package   weight  value: Water(4,40), Medicine(3,30), Food(5,45), Blankets(2,15), Generator(6,55)
+  masksubset                          weight  value  feasible
+     0  {}                                 0      0  yes
+     1  {Water}                            4     40  yes
+     2  {Medicine}                         3     30  yes
+     3  {Water,Medicine}                   7     70  yes
+     4  {Food}                             5     45  yes
+     5  {Water,Food}                       9     85  yes
+     6  {Medicine,Food}                    8     75  yes
+     7  {Water,Medicine,Food}             12    115  no
+     8  {Blankets}                         2     15  yes
+     9  {Water,Blankets}                   6     55  yes
+    10  {Medicine,Blankets}                5     45  yes
+    11  {Water,Medicine,Blankets}          9     85  yes
+    12  {Food,Blankets}                    7     60  yes
+    13  {Water,Food,Blankets}             11    100  no
+    14  {Medicine,Food,Blankets}          10     90  yes
+    15  {Water,Medicine,Food,Blankets}      14    130  no
+    16  {Generator}                        6     55  yes
+    17  {Water,Generator}                 10     95  yes
+    18  {Medicine,Generator}               9     85  yes
+    19  {Water,Medicine,Generator}        13    125  no
+    20  {Food,Generator}                  11    100  no
+    21  {Water,Food,Generator}            15    140  no
+    22  {Medicine,Food,Generator}         14    130  no
+    23  {Water,Medicine,Food,Generator}      18    170  no
+    24  {Blankets,Generator}               8     70  yes
+    25  {Water,Blankets,Generator}        12    110  no
+    26  {Medicine,Blankets,Generator}      11    100  no
+    27  {Water,Medicine,Blankets,Generator}      15    140  no
+    28  {Food,Blankets,Generator}         13    115  no
+    29  {Water,Food,Blankets,Generator}      17    155  no
+    30  {Medicine,Food,Blankets,Generator}      16    145  no
+    31  {Water,Medicine,Food,Blankets,Generator}      20    185  no
+
+Program: best value 95, subset ['Water', 'Generator'], candidates 32, feasible 17
+Check 1 itertools.combinations: best value 95   Check 2 dynamic programming: 95
+Hand check: {Water,Generator} weight 4+6=10 <= 10, value 40+55=95; scanning the 32-row table above, no feasible row exceeds 95 -> 95 expected
+
+=== Growth with number of packages (random instance, seed = n, W = half of total weight) ===
+   n  candidates 2^n    feasible  time (s) time ratio  us/candidate  best value  DP check
+   8             256         128     0.000        nan         0.510         252      True
+  10           1,024         512     0.001       4.59         0.585         322      True
+  12           4,096       2,048     0.003       5.13         0.750         522      True
+  14          16,384       8,192     0.014       4.50         0.843         595      True
+  16          65,536      32,768     0.060       4.32         0.911         640      True
+  18         262,144     131,870     0.251       4.21         0.958         664      True
+  20       1,048,576     524,288     1.224       4.87         1.167         762      True
+  22       4,194,304   2,097,152     5.266       4.30         1.255        1016      True
+
+Observed time multiplier per extra package (from n=20->22): x2.07  (candidates x2.00)
+  extrapolated n=24: 23 s = 0.01 h
+  extrapolated n=26: 100 s = 0.03 h
+  extrapolated n=28: 429 s = 0.12 h
+  extrapolated n=30: 1,838 s = 0.51 h
+  extrapolated n=40: 2,509,719 s = 697.14 h
+
+Response-time limit 5 s -> largest measured n inside the limit: 20
