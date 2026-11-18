@@ -1,0 +1,5 @@
+Correctness tests: PASSED (n = 0,1,2,3,10,257,1000; present and absent keys)
+n=    1,000  sort=0.0001s  hash build=0.0002s  linear avg=16.8us  bin(rec) avg=1.36us  hash avg=0.18us
+n=   10,000  sort=0.0016s  hash build=0.0019s  linear avg=193.9us  bin(rec) avg=1.94us  hash avg=0.15us
+n=  100,000  sort=0.0220s  hash build=0.0564s  linear avg=2161.4us  bin(rec) avg=3.90us  hash avg=0.21us
+n=1,000,000  sort=0.3210s  hash build=0.9690s  linear avg=20555.1us  bin(rec) avg=2.82us  hash avg=0.12us
