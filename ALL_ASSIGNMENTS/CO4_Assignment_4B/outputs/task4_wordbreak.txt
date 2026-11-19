@@ -1,0 +1,28 @@
+=== TASK 4: WordBreak forensics ===
+
+[Failing input] Text = catsanddogs  Dictionary = ['cats', 'dogs']
+ Faulty algorithm trace:
+  i=4: substring 'cats' (j=0) in dictionary -> DP[4]=True
+  i=11: substring 'dogs' (j=7) in dictionary -> DP[11]=True
+  Faulty result: True  DP = [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1]
+ Fixed algorithm trace:
+  i=4: DP[0]=True and 'cats' in dictionary -> DP[4]=True
+  Fixed result: False  DP = [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
+  Correct answer is False (the middle 'and' is not a dictionary word)
+
+[Regression input] Text = applepenapple  Dictionary = [apple, pen]
+  Faulty: True  Fixed: True
+
+[Additional tests, faulty vs fixed]
+  Text='' dict=['a'] faulty=True fixed=True optimised=True
+  Text='a' dict=['a'] faulty=True fixed=True optimised=True
+  Text='b' dict=['a'] faulty=False fixed=False optimised=False
+  Text='leetcode' dict=['code', 'leet'] faulty=True fixed=True optimised=True
+  Text='catsandog' dict=['and', 'cat', 'cats', 'dog', 'sand'] faulty=True fixed=False optimised=False
+  Text='aaaa' dict=['a', 'aa'] faulty=True fixed=True optimised=True
+  Text='xay' dict=['a'] faulty=False fixed=False optimised=False
+
+[Performance: fixed vs length-bounded optimisation]
+  n= 250: fixed=     2.68 ms  optimised=   0.03 ms  same result=True (False)
+  n= 500: fixed=    13.41 ms  optimised=   0.09 ms  same result=True (False)
+  n=1000: fixed=    80.46 ms  optimised=   0.16 ms  same result=True (False)

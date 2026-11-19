@@ -1,0 +1,48 @@
+=== TASK 2: Job Sequencing with Deadlines ===
+
+[Given instance]
+  Order by profit: [('A', 80), ('C', 60), ('D', 40), ('B', 35), ('E', 25)]
+  Job A (d=2, p=80) -> slot 2; profit=80; slots=[None, 'A', None]
+  Job C (d=2, p=60) -> slot 1; profit=140; slots=['C', 'A', None]
+  Job D (d=3, p=40) -> slot 3; profit=180; slots=['C', 'A', 'D']
+  Job B (d=1, p=35) rejected: no free slot <= 1
+  Job E (d=1, p=25) rejected: no free slot <= 1
+  FINAL SCHEDULE: ['C', 'A', 'D']  TOTAL PROFIT = 180
+  Brute-force optimum = 180
+
+[Modified instance: B profit 35 -> 90]
+  Order by profit: [('B', 90), ('A', 80), ('C', 60), ('D', 40), ('E', 25)]
+  Job B (d=1, p=90) -> slot 1; profit=90; slots=['B', None, None]
+  Job A (d=2, p=80) -> slot 2; profit=170; slots=['B', 'A', None]
+  Job C (d=2, p=60) rejected: no free slot <= 2
+  Job D (d=3, p=40) -> slot 3; profit=210; slots=['B', 'A', 'D']
+  Job E (d=1, p=25) rejected: no free slot <= 1
+  FINAL SCHEDULE: ['B', 'A', 'D']  TOTAL PROFIT = 210
+  Brute-force optimum = 210
+
+[Boundary: single job]
+  Order by profit: [('X', 10)]
+  Job X (d=1, p=10) -> slot 1; profit=10; slots=['X']
+  FINAL SCHEDULE: ['X']  TOTAL PROFIT = 10
+
+[Boundary: all deadlines = 1]
+  Order by profit: [('Y', 50), ('Z', 30), ('X', 10)]
+  Job Y (d=1, p=50) -> slot 1; profit=50; slots=['Y']
+  Job Z (d=1, p=30) rejected: no free slot <= 1
+  Job X (d=1, p=10) rejected: no free slot <= 1
+  FINAL SCHEDULE: ['Y']  TOTAL PROFIT = 50
+
+[Boundary: deadline larger than job count]
+  Order by profit: [('Y', 50), ('X', 10)]
+  Job Y (d=10, p=50) -> slot 10; profit=50; slots=[None, None, None, None, None, None, None, None, None, 'Y']
+  Job X (d=10, p=10) -> slot 9; profit=60; slots=[None, None, None, None, None, None, None, None, 'X', 'Y']
+  Schedule has 10 slots; TOTAL PROFIT = 60
+
+[Performance: greedy vs brute force]
+  n= 8: greedy=   0.006 ms (profit 485)  brute force=       0.2 ms (profit 485)  match=True
+  n=12: greedy=   0.006 ms (profit 584)  brute force=       4.5 ms (profit 584)  match=True
+  n=16: greedy=   0.009 ms (profit 919)  brute force=      86.1 ms (profit 919)  match=True
+  n=2000 greedy only: 1.72 ms
+
+[Random validation against brute force, 200 cases]
+  Matches: 200/200

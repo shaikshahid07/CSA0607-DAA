@@ -1,0 +1,36 @@
+=== TASK 3: 0/1 Knapsack (Dynamic Programming) ===
+
+[Given instance] capacity = 7
+  DP table (rows = items considered, columns = capacity 0..7):
+          0   1   2   3   4   5   6   7
+  none    0   0   0   0   0   0   0   0
+     P    0   0  12  12  12  12  12  12
+     Q    0   0  12  20  20  32  32  32
+     R    0   0  12  20  25  32  37  45
+     S    0   0  12  20  25  32  37  45
+  OPTIMUM VALUE = 45; ITEMS = ['Q', 'R']; total weight = 7
+  Brute-force optimum = 45
+
+[Boundary: capacity 0]
+  -> (0, [])
+[Boundary: capacity smaller than every item (1)]
+  -> (0, [])
+[Boundary: capacity large enough for all (14)]
+  -> (87, ['P', 'Q', 'R', 'S'])
+[Boundary: no items]
+  -> (0, [])
+
+[Why greedy by ratio fails for 0/1 (comparison)]
+  items [('A', 10, 60), ('B', 20, 100), ('C', 30, 120)] capacity 50
+  Ratio-greedy (no fractions): 160 ['A', 'B']
+  DP optimum                 : 220 ['B', 'C']
+
+[Performance: DP vs brute force]
+  n=10, W=40: DP=   0.035 ms  brute force=       0.9 ms  match=True
+  n=14, W=40: DP=   0.048 ms  brute force=      15.5 ms  match=True
+  n=16, W=40: DP=   0.057 ms  brute force=      64.4 ms  match=True
+  n=100, W=1000: DP only = 10.6 ms (100000 table cells)
+  n=200, W=2000: DP only = 42.5 ms (400000 table cells)
+
+[Random validation against brute force, 200 cases]
+  Matches: 200/200

@@ -1,0 +1,38 @@
+=== TASK 1: Fractional Knapsack (LoadVehicle) ===
+
+[Sample] capacity=50
+  Sorted by ratio: [('P1', 6.0), ('P2', 5.0), ('P3', 4.0)]
+  Take P1: fraction=1.000, weight=10.00, value=60.00, remaining capacity=40.00
+  Take P2: fraction=1.000, weight=20.00, value=100.00, remaining capacity=20.00
+  Take P3: fraction=0.667, weight=20.00, value=80.00, remaining capacity=0.00
+  TOTAL VALUE = 240.00
+
+[Boundary: capacity 0] capacity=0
+  Sorted by ratio: [('P1', 6.0), ('P2', 5.0)]
+  TOTAL VALUE = 0.00
+
+[Boundary: all fit] capacity=100
+  Sorted by ratio: [('P2', 10.0), ('P1', 2.0)]
+  Take P2: fraction=1.000, weight=4.00, value=40.00, remaining capacity=96.00
+  Take P1: fraction=1.000, weight=5.00, value=10.00, remaining capacity=91.00
+  TOTAL VALUE = 50.00
+
+[Single package, partial] capacity=3
+  Sorted by ratio: [('P1', 10.0)]
+  Take P1: fraction=0.375, weight=3.00, value=30.00, remaining capacity=0.00
+  TOTAL VALUE = 30.00
+
+[Equal ratios] capacity=6
+  Sorted by ratio: [('P1', 2.0), ('P2', 2.0), ('P3', 2.0)]
+  Take P1: fraction=1.000, weight=2.00, value=4.00, remaining capacity=4.00
+  Take P2: fraction=1.000, weight=3.00, value=6.00, remaining capacity=1.00
+  Take P3: fraction=0.200, weight=1.00, value=2.00, remaining capacity=0.00
+  TOTAL VALUE = 12.00
+
+[Failure case: invalid weight]
+  Rejected -> invalid package X: weight must be > 0, value >= 0
+
+[Performance: greedy O(n log n) on random inputs]
+  n=  1000:      0.29 ms, total value=130397.4
+  n= 10000:      3.59 ms, total value=1266727.6
+  n=100000:     56.63 ms, total value=12662218.7

@@ -1,0 +1,87 @@
+=== TASK 5: Shortest paths ===
+
+[5.1 Dijkstra from A]
+  Select A (dist=0); finalised=['A']
+     relax A->B (w=4): dist[B]=4, pred[B]=A
+     relax A->C (w=7): dist[C]=7, pred[C]=A
+  Select B (dist=4); finalised=['A', 'B']
+     relax B->C (w=2): dist[C]=6, pred[C]=B
+     relax B->D (w=6): dist[D]=10, pred[D]=B
+  Select C (dist=6); finalised=['A', 'B', 'C']
+     relax C->D (w=1): dist[D]=7, pred[D]=C
+     relax C->E (w=8): dist[E]=14, pred[E]=C
+  Select D (dist=7); finalised=['A', 'B', 'C', 'D']
+     relax D->E (w=3): dist[E]=10, pred[E]=D
+  Select E (dist=10); finalised=['A', 'B', 'C', 'D', 'E']
+  dist[A]=0  path A
+  dist[B]=4  path A->B
+  dist[C]=6  path A->B->C
+  dist[D]=7  path A->B->C->D
+  dist[E]=10  path A->B->C->D->E
+
+[5.2 Bellman-Ford from A on the same graph]
+  Round 1: {'A': 0, 'B': 4, 'C': 6, 'D': 7, 'E': 10}
+  Round 2: {'A': 0, 'B': 4, 'C': 6, 'D': 7, 'E': 10}
+  Final: {'A': 0, 'B': 4, 'C': 6, 'D': 7, 'E': 10} | negative cycle reachable: False
+
+[5.2 Negative edge, no cycle: A->B 4, A->C 5, C->B -3]
+  Bellman-Ford: ({'A': 0, 'B': 2, 'C': 5},)
+  Dijkstra rejects: Dijkstra requires non-negative weights
+  (Unguarded greedy would finalise B at 4, but true shortest is 2 via C.)
+
+[5.2 Negative cycle: A->B 1, B->C -2, C->B 1]
+  Bellman-Ford detects negative cycle: True
+
+[5.3 Floyd-Warshall, all pairs]
+  After allowing intermediate vertex up to A:
+          A    B    C    D    E
+    A     0    4    7  INF  INF
+    B   INF    0    2    6  INF
+    C   INF  INF    0    1    8
+    D   INF  INF  INF    0    3
+    E   INF  INF  INF  INF    0
+  After allowing intermediate vertex up to B:
+          A    B    C    D    E
+    A     0    4    6   10  INF
+    B   INF    0    2    6  INF
+    C   INF  INF    0    1    8
+    D   INF  INF  INF    0    3
+    E   INF  INF  INF  INF    0
+  After allowing intermediate vertex up to C:
+          A    B    C    D    E
+    A     0    4    6    7   14
+    B   INF    0    2    3   10
+    C   INF  INF    0    1    8
+    D   INF  INF  INF    0    3
+    E   INF  INF  INF  INF    0
+  After allowing intermediate vertex up to D:
+          A    B    C    D    E
+    A     0    4    6    7   10
+    B   INF    0    2    3    6
+    C   INF  INF    0    1    4
+    D   INF  INF  INF    0    3
+    E   INF  INF  INF  INF    0
+  After allowing intermediate vertex up to E:
+          A    B    C    D    E
+    A     0    4    6    7   10
+    B   INF    0    2    3    6
+    C   INF  INF    0    1    4
+    D   INF  INF  INF    0    3
+    E   INF  INF  INF  INF    0
+  FINAL all-pairs matrix:
+          A    B    C    D    E
+    A     0    4    6    7   10
+    B   INF    0    2    3    6
+    C   INF  INF    0    1    4
+    D   INF  INF  INF    0    3
+    E   INF  INF  INF  INF    0
+
+[Boundary: single vertex]
+  Dijkstra: {'A': 0}
+[Boundary: unreachable vertex]
+  Dijkstra: {'A': 0, 'B': inf}
+
+[Performance on random graphs (non-negative weights)]
+  V= 40, E=157: Dijkstra=   0.075 ms  Bellman-Ford=   0.066 ms  Floyd=    3.984 ms  agree=True
+  V= 80, E=315: Dijkstra=   0.258 ms  Bellman-Ford=   0.146 ms  Floyd=   27.593 ms  agree=True
+  V=120, E=476: Dijkstra=   0.137 ms  Bellman-Ford=   0.305 ms  Floyd=   96.305 ms  agree=True
