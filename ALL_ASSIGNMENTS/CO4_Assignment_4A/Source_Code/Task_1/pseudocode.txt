@@ -1,0 +1,34 @@
+ALGORITHM FractionalLoadVehicle(Weight, Value, n, Capacity)
+INPUT:
+   Weight[1..n] - weight of each package (Weight[i] > 0)
+   Value[1..n]  - value of each package  (Value[i] >= 0)
+   n            - number of packages
+   Capacity     - carrying capacity of the vehicle (Capacity >= 0)
+OUTPUT:
+   X[1..n]      - fraction of package i loaded (0 <= X[i] <= 1)
+   TotalValue   - total value loaded
+BEGIN
+   FOR i ← 1 TO n DO
+      Ratio[i] ← Value[i] / Weight[i]
+      X[i] ← 0
+   END FOR
+   // GREEDY-CHOICE RULE: highest value-to-weight ratio first
+   SORT package indices into Order[1..n] in descending order of Ratio
+   Remaining ← Capacity
+   TotalValue ← 0
+   k ← 1
+   WHILE k <= n AND Remaining > 0 DO
+      i ← Order[k]
+      IF Weight[i] <= Remaining THEN   // package fits completely
+         X[i] ← 1
+         Remaining ← Remaining - Weight[i]
+         TotalValue ← TotalValue + Value[i]
+      ELSE   // package must be divided
+         X[i] ← Remaining / Weight[i]
+         TotalValue ← TotalValue + Value[i] * X[i]
+         Remaining ← 0
+      END IF
+      k ← k + 1
+   END WHILE
+   RETURN X, TotalValue
+END

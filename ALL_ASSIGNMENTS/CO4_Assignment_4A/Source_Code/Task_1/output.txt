@@ -1,0 +1,36 @@
+--- Test 1: standard instance ---
+Packages (id, weight, value): [('P1', 10, 60), ('P2', 20, 100), ('P3', 30, 120)] | Capacity: 50
+   take P1 fully (ratio=6.00) remaining=40 total=60
+   take P2 fully (ratio=5.00) remaining=20 total=160
+   take P3 fraction 0.6667 (ratio=4.00) remaining=0 total=240
+Fractions loaded : {'P1': 1.0, 'P2': 1.0, 'P3': 0.6667}
+Total value      : 240.0
+
+--- Test 2: capacity 0 ---
+Packages (id, weight, value): [('P1', 10, 60), ('P2', 20, 100), ('P3', 30, 120)] | Capacity: 0
+Fractions loaded : {'P1': 0.0, 'P2': 0.0, 'P3': 0.0}
+Total value      : 0.0
+
+--- Test 3: capacity larger than total weight ---
+Packages (id, weight, value): [('P1', 10, 60), ('P2', 20, 100), ('P3', 30, 120)] | Capacity: 100
+   take P1 fully (ratio=6.00) remaining=90 total=60
+   take P2 fully (ratio=5.00) remaining=70 total=160
+   take P3 fully (ratio=4.00) remaining=40 total=280
+Fractions loaded : {'P1': 1.0, 'P2': 1.0, 'P3': 1.0}
+Total value      : 280.0
+
+--- Test 4: single package, partial ---
+Packages (id, weight, value): [('S', 8, 40)] | Capacity: 4
+   take S fraction 0.5000 (ratio=5.00) remaining=0 total=20
+Fractions loaded : {'S': 0.5}
+Total value      : 20.0
+
+--- Test 5: four packages, capacity 10 ---
+Packages (id, weight, value): [('A', 5, 10), ('B', 4, 10), ('C', 6, 12), ('D', 3, 9)] | Capacity: 10
+   take D fully (ratio=3.00) remaining=7 total=9
+   take B fully (ratio=2.50) remaining=3 total=19
+   take A fraction 0.6000 (ratio=2.00) remaining=0 total=25
+Fractions loaded : {'A': 0.6, 'B': 1.0, 'C': 0.0, 'D': 1.0}
+Total value      : 25.0
+
+Comparison - highest-value-first on Test 1 gives 220.0 < 240 (ratio rule)

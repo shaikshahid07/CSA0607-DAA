@@ -1,0 +1,18 @@
+DP table: rows i = 0..n (items considered), columns w = 0..W
+            w=0  w=1  w=2  w=3  w=4  w=5  w=6  w=7  
+i=0 (none)  0   0   0   0   0   0   0   0   
+i=1 (P)     0   0   12  12  12  12  12  12  
+i=2 (Q)     0   0   12  20  20  32  32  32  
+i=3 (R)     0   0   12  20  25  32  37  45  
+i=4 (S)     0   0   12  20  25  32  37  45  
+
+Optimum value : 45
+Items chosen  : ['Q', 'R'] | total weight = 7
+
+=== Edge cases ===
+Capacity 0            : (0, [])
+Capacity 1 (none fit) : (0, [])
+Capacity 14 (all fit) : (87, ['P', 'Q', 'R', 'S'])
+
+=== Random validation against brute force (300 instances) ===
+All 300 random instances matched; reconstructed sets are feasible and optimal.

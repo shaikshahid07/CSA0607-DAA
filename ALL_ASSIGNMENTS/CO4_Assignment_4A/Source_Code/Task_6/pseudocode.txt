@@ -1,0 +1,47 @@
+ALGORITHM MaxEnergyScheduling(ID, Start, Finish, Value, n)
+INPUT:
+   ID[1..n], Start[1..n], Finish[1..n] (Start < Finish), Value[1..n] (>= 0)
+   Jobs i and j are compatible if Finish[i] <= Start[j] or Finish[j] <= Start[i]
+OUTPUT:
+   Selected   - list of selected job IDs in time order
+   MaxValue   - maximum total energy-saving value
+BEGIN
+   SORT jobs in ascending order of Finish (ties: ascending Start)   // preprocessing
+   FOR j ← 1 TO n DO   // P[j] = last job that finishes by Start[j]
+      Low ← 1
+      High ← j - 1
+      P[j] ← 0
+      WHILE Low <= High DO   // binary search on the sorted finish times
+         Mid ← FLOOR((Low + High) / 2)
+         IF Finish[Mid] <= Start[j] THEN
+            P[j] ← Mid
+            Low ← Mid + 1
+         ELSE
+            High ← Mid - 1
+         END IF
+      END WHILE
+   END FOR
+   OPT[0] ← 0   // base condition: no jobs, no value
+   FOR j ← 1 TO n DO
+      Include ← Value[j] + OPT[P[j]]   // take job j: jobs 1..P[j] remain compatible
+      Exclude ← OPT[j - 1]   // job j skipped
+      IF Include > Exclude THEN
+         OPT[j] ← Include
+         Take[j] ← TRUE
+      ELSE
+         OPT[j] ← Exclude
+         Take[j] ← FALSE
+      END IF
+   END FOR
+   Selected ← empty list
+   j ← n
+   WHILE j > 0 DO   // reconstruction
+      IF Take[j] = TRUE THEN
+         ADD ID[j] TO FRONT OF Selected
+         j ← P[j]   // jump over all jobs that overlap job j
+      ELSE
+         j ← j - 1
+      END IF
+   END WHILE
+   RETURN Selected, OPT[n]
+END

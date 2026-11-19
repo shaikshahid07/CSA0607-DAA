@@ -1,0 +1,27 @@
+ALGORITHM JobSequencing(ID, Deadline, Profit, n)
+INPUT:
+   ID[1..n], Deadline[1..n] (integer >= 1), Profit[1..n] (>= 0)
+OUTPUT:
+   Slot[1..D]   - job scheduled in each time slot (EMPTY if unused)
+   TotalProfit  - total profit of the scheduled jobs
+BEGIN
+   SORT jobs in descending order of Profit
+   D ← MIN(n, MAX(Deadline[1..n]))   // number of usable slots
+   FOR t ← 1 TO D DO
+      Slot[t] ← EMPTY
+   END FOR
+   TotalProfit ← 0
+   FOR k ← 1 TO n DO   // jobs in descending profit order
+      t ← MIN(Deadline[k], D)   // latest slot allowed by the deadline
+      WHILE t >= 1 AND Slot[t] != EMPTY DO   // slot availability check
+         t ← t - 1
+      END WHILE
+      IF t >= 1 THEN   // feasibility check passed
+         Slot[t] ← ID[k]   // job placement
+         TotalProfit ← TotalProfit + Profit[k]   // profit update
+      ELSE
+         REJECT job k   // no free slot on or before its deadline
+      END IF
+   END FOR
+   RETURN Slot, TotalProfit
+END
