@@ -1,0 +1,36 @@
+B2 ADVERSARIAL INPUT - same size, very different search
+==============================================================================
+Graph A: path of 10 services + a 4-service 'diamond' joined at one end
+    vertices=14  conflicts=15  m=3
+Graph B: path of 10 services + a separate K4 (4 mutually conflicting services)
+    vertices=14  conflicts=15  m=3
+
+PREDICTION (written before running)
+  1. Graph B will need far more search than Graph A.
+  2. Graph A: almost no unsuccessful branches; each service has a free colour.
+  3. Graph B: failures arise only at the LAST four services (the K4), because the
+     K4 needs 4 colours but m = 3. They appear only after the path is fully coloured.
+  4. Pruning is early for Graph A (no dead ends) but LATE for Graph B: the conflict
+     is hidden behind 10 free path decisions, so every path colouring is tried.
+
+RESULTS (Version 1, input order)
+    measure                      Graph A     Graph B     B / A
+    Search nodes                      15       26110   1740.7x
+    Candidate assignments             22       78330   3560.5x
+    Rejected branches                  8       52221   6527.6x
+    Backtracks                         0       26109         -
+    Max depth                         14          13      0.9x
+    answer: Graph A = colourable | Graph B = not colourable
+    Graph A colouring valid: True
+
+EXTRA: Graph B with Version 2 ordering (most-connected-to-placed first)
+    nodes=16 backtracks=15 rejected=33 max_depth=3
+
+GROWTH: same family, increasing size, m = 3 (Version 1)
+       n     A nodes       B nodes    B backtracks    B nodes / previous
+       8           9           406             405                     -
+      10          11          1630            1629                 4.01x
+      12          13          6526            6525                  4.0x
+      14          15         26110           26109                  4.0x
+      16          17        104446          104445                  4.0x
+      18          19        417790          417789                  4.0x

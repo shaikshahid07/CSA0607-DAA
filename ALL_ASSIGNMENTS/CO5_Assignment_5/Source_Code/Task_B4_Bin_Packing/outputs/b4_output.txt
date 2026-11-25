@@ -1,0 +1,44 @@
+B4 BIN PACKING - assigning workloads to servers (capacity C = 100)
+Rule used: First Fit Decreasing (sort by demand, largest first; place each workload
+on the first server that still has enough remaining capacity, else open a new server)
+==============================================================================
+B4.1 ALLOCATION OUTPUT - 16 workloads
+    demands: W1=63, W2=12, W3=35, W4=41, W5=45, W6=56
+    demands: W7=36, W8=57, W9=52, W10=68, W11=51, W12=48
+    demands: W13=30, W14=11, W15=11, W16=27
+    servers used: 7
+    Server  1 | load  98 | remaining   2 | W10=68, W13=30
+    Server  2 | load  99 | remaining   1 | W1=63, W7=36
+    Server  3 | load  98 | remaining   2 | W8=57, W4=41
+    Server  4 | load  91 | remaining   9 | W6=56, W3=35
+    Server  5 | load 100 | remaining   0 | W9=52, W12=48
+    Server  6 | load  96 | remaining   4 | W11=51, W5=45
+    Server  7 | load  61 | remaining  39 | W16=27, W2=12, W14=11, W15=11
+    total demand = 643  ->  lower bound = ceil(643/100) = 7 servers
+    placement comparisons: 63
+    every server within capacity: True | every workload placed once: True
+
+B4.2 CHALLENGING THE STRATEGY - input where FFD is not optimal
+    demands: W1=44, W2=46, W3=32, W4=31, W5=24, W6=22
+    First Fit Decreasing:
+    servers used: 3
+    Server  1 | load  90 | remaining  10 | W2=46, W1=44
+    Server  2 | load  87 | remaining  13 | W3=32, W4=31, W5=24
+    Server  3 | load  22 | remaining  78 | W6=22
+    Exact search (backtracking over all placements):
+    servers used: 2
+    Server  1 | load 100 | remaining   0 | W2=46, W3=32, W6=22
+    Server  2 | load  99 | remaining   1 | W1=44, W4=31, W5=24
+    FFD uses 3 servers, optimum is 2 -> FFD is not optimal
+    Why: FFD packs W2+W1 = 90 first, which leaves 10 free, too small for any other workload.
+
+    Extra check: 500 random inputs of 9 workloads, FFD vs exact optimum
+        FFD optimal in 488 cases, one server worse in 12 cases, worst ratio = 1.33
+
+B4.3 EVIDENCE FOR THE DECISION NOTE - scale test
+     workloads  FFD servers  lower bound  FFD/bound  FF servers  FFD comparisons   FFD ms
+          1000          333          332      1.003         338           208630       10
+          2000          648          646      1.003         658           818404       41
+          5000         1619         1614      1.003        1636          5118316      273
+         10000         3229         3222      1.002        3266         20382364     1170
+    Orderings of just 30 workloads: 30! = 265252859812191058636308480000000

@@ -1,0 +1,126 @@
+B1.1 VALIDATION TESTS (Version 1: input order)
+==============================================================================
+T1  Colourable graph: triangle with a tail (5 vertices)
+    verifies : checks a normal successful search and a valid final colouring
+    n=5  m=3  conflicts=6
+    expected : COLOURABLE   actual : COLOURABLE   -> PASS
+    colouring: [1, 2, 3, 1, 2]
+    nodes=6 attempts=9 rejected=4 backtracks=0 max_depth=5
+T2  Colourable graph: odd cycle C5 with 3 colours
+    verifies : checks an odd cycle needs the third group on its closing service
+    n=5  m=3  conflicts=5
+    expected : COLOURABLE   actual : COLOURABLE   -> PASS
+    colouring: [1, 2, 1, 2, 3]
+    nodes=6 attempts=9 rejected=4 backtracks=0 max_depth=5
+T3  Not colourable: triangle with a tail using only 2 colours
+    verifies : checks that failure is reported after every option is exhausted
+    n=5  m=2  conflicts=6
+    expected : NOT COLOURABLE   actual : NOT COLOURABLE   -> PASS
+    nodes=5 attempts=10 rejected=6 backtracks=4 max_depth=2
+T4  Not colourable: complete graph K4 with 3 colours
+    verifies : checks the smallest dense conflict (4 mutual conflicts, 3 groups)
+    n=4  m=3  conflicts=6
+    expected : NOT COLOURABLE   actual : NOT COLOURABLE   -> PASS
+    nodes=16 attempts=48 rejected=33 backtracks=15 max_depth=3
+T5  Not colourable: odd cycle C5 with 2 colours
+    verifies : checks that odd cycles are rejected when m = 2
+    n=5  m=2  conflicts=5
+    expected : NOT COLOURABLE   actual : NOT COLOURABLE   -> PASS
+    nodes=9 attempts=18 rejected=10 backtracks=8 max_depth=4
+T6  Colourable: even cycle C6 with 2 colours
+    verifies : checks a bipartite graph is accepted with m = 2
+    n=6  m=2  conflicts=6
+    expected : COLOURABLE   actual : COLOURABLE   -> PASS
+    colouring: [1, 2, 1, 2, 1, 2]
+    nodes=7 attempts=9 rejected=3 backtracks=0 max_depth=6
+T7  Boundary: single service, 1 group
+    verifies : smallest non-empty input
+    n=1  m=1  conflicts=0
+    expected : COLOURABLE   actual : COLOURABLE   -> PASS
+    colouring: [1]
+    nodes=2 attempts=1 rejected=0 backtracks=0 max_depth=1
+T8  Boundary: 6 services with no conflicts, 1 group
+    verifies : no edges means one group is enough
+    n=6  m=1  conflicts=0
+    expected : COLOURABLE   actual : COLOURABLE   -> PASS
+    colouring: [1, 1, 1, 1, 1, 1]
+    nodes=7 attempts=6 rejected=0 backtracks=0 max_depth=6
+T9  Boundary: K5 with exactly 5 groups (m = n)
+    verifies : m equals the chromatic number, the tightest successful case
+    n=5  m=5  conflicts=10
+    expected : COLOURABLE   actual : COLOURABLE   -> PASS
+    colouring: [1, 2, 3, 4, 5]
+    nodes=6 attempts=15 rejected=10 backtracks=0 max_depth=5
+T10  Boundary: K5 with 4 groups (m = n - 1)
+    verifies : one group too few must fail
+    n=5  m=4  conflicts=10
+    expected : NOT COLOURABLE   actual : NOT COLOURABLE   -> PASS
+    nodes=65 attempts=260 rejected=196 backtracks=64 max_depth=4
+T11  Boundary: empty graph (0 services)
+    verifies : nothing to assign, trivially successful
+    n=0  m=2  conflicts=0
+    expected : COLOURABLE   actual : COLOURABLE   -> PASS
+    colouring: []
+    nodes=1 attempts=0 rejected=0 backtracks=0 max_depth=0
+T12  Boundary: 3 services but 0 groups
+    verifies : no colour exists, must fail immediately
+    n=3  m=0  conflicts=0
+    expected : NOT COLOURABLE   actual : NOT COLOURABLE   -> PASS
+    nodes=1 attempts=0 rejected=0 backtracks=0 max_depth=0
+------------------------------------------------------------------------------
+Tests passed: 12 / 12
+
+B1.3 / B1.4 SEARCH ORDER COMPARISON
+Version 1 = input order | Version 2 = most-connected-to-placed first
+==============================================================================
+G1 Triangle+tail, m=2  (answer: not colourable)
+    measure                    Version 1   Version 2
+    Search nodes                       5           5
+    Candidate assignments             10          10
+    Rejected branches                  6           6
+    Backtracks                         4           4
+    Max depth                          2           2
+G2 Petersen graph, m=3  (answer: colourable)
+    measure                    Version 1   Version 2
+    Search nodes                      11          11
+    Candidate assignments             20          19
+    Rejected branches                 10           9
+    Backtracks                         0           0
+    Max depth                         10          10
+G3 Groetzsch graph, m=3  (answer: not colourable)
+    measure                    Version 1   Version 2
+    Search nodes                     472         328
+    Candidate assignments           1416         984
+    Rejected branches                945         657
+    Backtracks                       471         327
+    Max depth                         10          10
+G4 Path(10)+K4 last, m=3  (answer: not colourable)
+    measure                    Version 1   Version 2
+    Search nodes                   26110          16
+    Candidate assignments          78330          48
+    Rejected branches              52221          33
+    Backtracks                     26109          15
+    Max depth                         13           3
+G5 K4 first + path(10), m=3  (answer: not colourable)
+    measure                    Version 1   Version 2
+    Search nodes                      16          16
+    Candidate assignments             48          48
+    Rejected branches                 33          33
+    Backtracks                        15          15
+    Max depth                          3           3
+G6 Random 14v/30e seed 7, m=3  (answer: not colourable)
+    measure                    Version 1   Version 2
+    Search nodes                     112          16
+    Candidate assignments            336          48
+    Rejected branches                225          33
+    Backtracks                       111          15
+    Max depth                          6           3
+G7 Random 16v/40e seed 11, m=3  (answer: not colourable)
+    measure                    Version 1   Version 2
+    Search nodes                    4474         106
+    Candidate assignments          13422         318
+    Rejected branches               8949         213
+    Backtracks                      4473         105
+    Max depth                         15          15
+------------------------------------------------------------------------------
+Total search nodes over all graphs: Version 1 = 31200, Version 2 = 498

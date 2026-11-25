@@ -1,0 +1,54 @@
+B3 EXACT vs APPROXIMATE - emergency service set cover
+==============================================================================
+B3.1 CORRECTNESS ON SMALL INSTANCES
+    Instance                                     Exact  Greedy  Same?
+    1 (hand-made, 8 zones, 6 centres)                3       3    YES
+        exact  = {C1, C2, C3}  (22 combinations examined)
+        greedy = {C1, C2, C3}  (18 gain evaluations)
+        both valid covers: True
+    2 (random seed 5, 12 zones, 8 centres)           4       4    YES
+        exact  = {C2, C5, C7, C8}  (146 combinations examined)
+        greedy = {C7, C5, C8, C2}  (32 gain evaluations)
+        both valid covers: True
+    3 (random seed 21, 15 zones, 10 centres)         4       4    YES
+        exact  = {C1, C2, C3, C6}  (178 combinations examined)
+        greedy = {C3, C1, C2, C6}  (40 gain evaluations)
+        both valid covers: True
+    Extra check: 300 random instances (14 zones, 10 centres):
+        greedy matched the optimum in 245, was worse in 55 (largest gap = 2 centre)
+
+B3.2 COUNTEREXAMPLE FOR GREEDY
+    C1 covers [1, 2, 4, 5]
+    C2 covers [1, 2, 3]
+    C3 covers [4, 5, 6]
+    Greedy trace:
+        C1 would newly cover 4 zone(s)
+        C2 would newly cover 3 zone(s)
+        C3 would newly cover 3 zone(s)
+      -> choose C1 (gain 4), uncovered now [3, 6]
+        C1 would newly cover 0 zone(s)
+        C2 would newly cover 1 zone(s)
+        C3 would newly cover 1 zone(s)
+      -> choose C2 (gain 1), uncovered now [6]
+        C1 would newly cover 0 zone(s)
+        C2 would newly cover 0 zone(s)
+        C3 would newly cover 1 zone(s)
+      -> choose C3 (gain 1), uncovered now []
+    GreedyCoverSize = 3 {C1, C2, C3}
+    OptimalCoverSize = 2 {C2, C3}
+    GreedyCoverSize > OptimalCoverSize : True
+
+B3.3 INCREASING THE PROBLEM SIZE (random instances, ~15% coverage per centre)
+    zones x centres    total 2^m  exact combos  greedy evals  exact  greedy  exact ms  greedy ms
+    10 x 8                   256           166            40      5       5       0.1       0.01
+    14 x 12                 4096          2616            84      7       7       1.6       0.02
+    18 x 16                65536         17294           112      7       7      12.2       0.02
+    22 x 20              1048576        198836           160      8       8     167.0       0.03
+    26 x 24             16777216       3268344           240     10      10    3535.1       0.05
+    30 x 27            134217728       3563355           243      9       9    4033.6       0.08
+
+    Greedy only, much larger instances (exact search is not attempted):
+    zones x centres   greedy evals  greedy cover        combos exact must rule out
+    200 x 100                 3700            37                          4.20e+27
+    500 x 200                 8600            43                          4.10e+43
+    1000 x 400               18800            47                          7.00e+60
